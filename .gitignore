@@ -27,3 +27,4 @@ CMakeFiles
 **.egg-info/*
 *.rej
 parser/*.gz
+parser/GDML_*/**

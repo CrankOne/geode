@@ -1,7 +1,7 @@
 import os
-import sys  # XXX
+from .parser.parser_3_1_6 import parse
 
-def templates_of( baseDir, criteria ):
+def files_at( baseDir, criteria ):
     """
     A generator function returning files matching certain criterion from 
     a directory recursively. 
@@ -14,6 +14,12 @@ def templates_of( baseDir, criteria ):
                 keys = fullPath.split(os.sep)
                 yield keys
 
+def import_assemblies( baseDir, gdmlExtensions={'gdml'} ):
+    for assemblyFile in files_at(baseDir,
+            lambda fn: any( map(lambda ext: fn.endswith(ext), gdmlExtensions) )):
+        assembly = parse_GDML( fn )
+
+#import sys  # XXX
 # any( map( lambda ext: f.endswith(ext), templateExtensions ))
 #collect_templates(sys.argv[1])
 

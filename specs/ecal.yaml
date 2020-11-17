@@ -1,0 +1,6 @@
+
+definitions:
+    cellSizeX: { value: 10, units: mm }
+    cellSizeY: { value: 20, units: mm }
+
+

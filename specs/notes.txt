@@ -1,0 +1,44 @@
+
+                        * * *    * * *    * * *
+
+Package must provide reusable blueprint that may be embedded into larger Flask
+application as well as standalone server utilizing this blueprint.
+
+At the level of geometry, no "detector" entity exists. The entities are:
+    - geometry root [that may contains references to]
+    - assemblies
+An `assembly` MAY represent a detector entity, but semantical interpretation of
+the geometry is not a subject of Geode.
+
+Assemblies may be available as "plain" GDML -- for compliance with other
+solutions exploiting GDML in their MC chain without extensions (query
+string `disableExtensions=1`).
+
+Both, assemblies and setups may be requested in restrained mode when all the
+information including materials are provided (query string `restrained=1`).
+
+                        * * *    * * *    * * *
+
+Executables:
+
+    - render.py [dir] [configs] -- renders geometry library into directory
+    - serve.py [dir] [configs] -- runs standalone RESTful server
+    - dump-nist-mats.py -- writes a dump of NIST mats (?)
+
+Configuration sources:
+    - common -- defines common parameters for geometry hierarchy; parameters
+    must be available on server for browsing.
+    - setup -- defines particular setup, overrides common; setups has to be
+    available and seen by listing (RESTful lifecycle?).
+    - settings -- detector geometry positions and versions, may override
+    common and setup settings; placements usually submitted by client as GET
+    body.
+
+The `settings` are submitted via GET query string and thus:
+    1. its cached
+    2. it must not contain large data
+
+The `setup` may obey a typical REST lifecycle with PUT/POST/PUT/DELETE stages.
+In future the `setup` must become a source of truth for particular run numbers,
+certain MC setups and so on.
+

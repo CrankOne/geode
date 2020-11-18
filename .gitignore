@@ -26,5 +26,5 @@ CMakeFiles
 **/Linux/*
 **.egg-info/*
 *.rej
-parser/*.gz
-parser/GDML_*/**
+GDMLParser/v*/*.gz
+GDMLParser/v*/GDML_*/**

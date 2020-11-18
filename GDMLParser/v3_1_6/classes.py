@@ -2,25 +2,25 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Nov 17 12:42:41 2020 by generateDS.py version 2.37.1.
+# Generated Tue Nov 17 15:01:36 2020 by generateDS.py version 2.37.1.
 # Python 3.7.8 (default, Aug 15 2020, 19:20:38)  [GCC 9.3.0]
 #
 # Command line options:
 #   ('-m', '')
 #   ('-f', '')
-#   ('-o', 'parser_3_1_6/gdmlClasses.py')
+#   ('-o', 'classes.py')
 #   ('--export', 'write literal etree')
 #   ('--root-element', 'gdml')
-#   ('-s', 'parser_3_1_6/gdmlSubclasses.py')
+#   ('-s', 'subclasses.py')
 #
 # Command line arguments:
-#   schema-3_1_6/gdml.xsd
+#   GDML_3_1_6/schema/gdml.xsd
 #
 # Command line:
-#   /var/src/.venv/bin/generateDS.py -m -f -o "parser_3_1_6/gdmlClasses.py" --export="write literal etree" --root-element="gdml" -s "parser_3_1_6/gdmlSubclasses.py" schema-3_1_6/gdml.xsd
+#   /var/src/venv/bin/generateDS.py -m -f -o "classes.py" --export="write literal etree" --root-element="gdml" -s "subclasses.py" GDML_3_1_6/schema/gdml.xsd
 #
 # Current working directory (os.getcwd()):
-#   parser
+#   v3_1_6
 #
 
 from six.moves import zip_longest
@@ -25485,8 +25485,8 @@ def parseLiteral(inFileName, silence=False, print_warnings=True):
         doc = None
         rootNode = None
     if not silence:
-        sys.stdout.write('#from gdmlClasses import *\n\n')
-        sys.stdout.write('import gdmlClasses as model_\n\n')
+        sys.stdout.write('#from classes import *\n\n')
+        sys.stdout.write('import classes as model_\n\n')
         sys.stdout.write('rootObj = model_.rootClass(\n')
         rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
         sys.stdout.write(')\n')

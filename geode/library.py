@@ -2,34 +2,18 @@ import os
 import io
 import logging
 from lxml import etree as lxmlETree
-import GDMLParser.v3_1_6.classes as GDML_3_1_6
+import pkg_resources as pkgResources
+
+# List of generated parser modules
+import geode.GDMLParser.v3_1_6.classes as GDML_3_1_6
+# ... (add new parsers here)
 
 # Collection of GDML root class constructors
 # TODO: assets path on install from setup.py?
 gGDMLStructs = {
     (3, 1, 6): GDML_3_1_6
+    # ... (add new parsers here)
 }
-
-#def parse_xml(xml, **kwargs):
-#    """
-#    Parses XML provided as file instance or plain string into LXML document
-#    object.
-#    Uses common trick with lxml: first, try `ETCompatXMLParser`, on failure --
-#    fallback to XMLParser.
-#    """
-#    L = logging.getLogger(__name__)
-#    parser = None
-#    try:
-#        parser = lxmlETree.ETCompatXMLParser()
-#    except AttributeError:
-#        L.debug('Failed to instantiate ETCompatXMLParser; fallback to xml.etree')
-#        parser = lxmlETree.XMLParser()
-#    if isinstance(xml, io.TextIOBase):
-#        doc = lxmlETree.parse(xml, parser=parser, **kwargs)
-#    else:
-#        doc = lxmlETree.fromstring(xml, parser=parser, **kwargs)
-#    return doc
-
 def get_root_tag(node, module):
     tag = module.Tag_pattern_.match(node.tag).groups()[-1]
     rootClass = None
@@ -144,6 +128,15 @@ class GeoLibrary(object):
                 '.'.join([str(v) for v in schemaVersion])))
         self._schemaVersion = schemaVersion
         self._dataStructures = gGDMLStructs[self._schemaVersion]
+        # initialize schema object
+        schemaPath = pkgResources.resource_filename( 'geode'
+                , 'GDMLParser/v{version}/GDML_{version}/schema/gdml.xsd'.format(
+                            version='_'.join([str(v) for v in schemaVersion]))
+                )
+        with open(schemaPath) as f:
+            schemaDoc = lxmlETree.parse(f)
+        #schemaDoc = parse_xml(sys.argv[1])
+        self._schema = lxmlETree.XMLSchema( schemaDoc )
 
     def import_fs_subtree( self
                          , baseDir
@@ -157,7 +150,11 @@ class GeoLibrary(object):
         for keys, fPath in files_at(baseDir,
                 lambda fn: any( map(lambda ext: fn.endswith(ext), gdmlExtensions) )):
             with open(fPath, 'r') as f:
-                gdmlData, warns, err = parse_GDML(f, version=self._schemaVersion, lxmlParseKwargs=lxmlParseKwargs)
+                gdmlData, warns, err = parse_GDML( f
+                        , version=self._schemaVersion
+                        , lxmlParseKwargs=lxmlParseKwargs
+                        , schema=self._schema
+                        )
             if not err:
                 self.items[tuple(keys)] = { 'file': fPath
                                           , 'warnings': warns
@@ -181,25 +178,26 @@ import sys  # XXX
 
 #
 # XXX
-with open(sys.argv[1]) as f:
-    schemaDoc = lxmlETree.parse(f)
-#schemaDoc = parse_xml(sys.argv[1])
-schemaObj = lxmlETree.XMLSchema( schemaDoc )
+#with open(sys.argv[1]) as f:
+#    schemaDoc = lxmlETree.parse(f)
+##schemaDoc = parse_xml(sys.argv[1])
+#schemaObj = lxmlETree.XMLSchema( schemaDoc )
+#
+#asString = False
+#with open(sys.argv[2]) as f:
+#    doc, warns = None, None
+#    if asString:
+#        xml = f.read()
+#        root, warns = parse_GDML(xml.encode())
+#    else:
+#        root, warns, error = parse_GDML(f, schema=schemaObj)
+#print(warns, error)
+#if root:
+#    root.export( sys.stdout, 0, name_='gdml' )
 
-asString = False
-with open(sys.argv[2]) as f:
-    doc, warns = None, None
-    if asString:
-        xml = f.read()
-        root, warns = parse_GDML(xml.encode())
-    else:
-        root, warns, error = parse_GDML(f, schema=schemaObj)
-print(warns, error)
-if root:
-    root.export( sys.stdout, 0, name_='gdml' )
+lib = GeoLibrary()
+lib.import_fs_subtree(sys.argv[1])
+for k in lib.items.keys():
+    print(k)
 
-#lib = GeoLibrary()
-#lib.import_fs_subtree(sys.argv[1])
-#for k in lib.items.keys():
-#    print(k)
 

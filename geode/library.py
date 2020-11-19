@@ -113,7 +113,7 @@ def files_at( baseDir, criteria ):
                 keys = fullPath.split(os.sep)
                 yield (keys, os.path.join(root, f))
 
-class GeoLibrary(object):
+class Library(object):
     """
     Geometry library representation.
     """
@@ -144,7 +144,8 @@ class GeoLibrary(object):
                          , lxmlParseKwargs={}
                          ):
         """
-        Recursively imports files from a dir by extension criteria.
+        Recursively imports files from a certain location by extension criteria
+        into current instance.
         """
         L = logging.getLogger(__name__)
         for keys, fPath in files_at(baseDir,
@@ -167,7 +168,6 @@ class GeoLibrary(object):
             else:
                 L.error('Failed to import "%s". Error:'%fPath)
                 L.exception(err)
-
 
 import sys  # XXX
 # any( map( lambda ext: f.endswith(ext), templateExtensions ))
@@ -195,7 +195,7 @@ import sys  # XXX
 #if root:
 #    root.export( sys.stdout, 0, name_='gdml' )
 
-lib = GeoLibrary()
+lib = Library()
 lib.import_fs_subtree(sys.argv[1])
 for k in lib.items.keys():
     print(k)

@@ -43,3 +43,28 @@ Three levels of normalized config data are available:
 
 The latter parameter overrides the former.
 
+# Troubleshooting
+
+## Segmentation Foults in LXML Python Module
+
+The `lxml` package that we are using to parse and validate XML is one of the
+most mature packages in Python ecosystem. However, it is known to have multiple
+issues with memory management that is hard to trace and debug. In case you've
+faced one, it most probably relates to some advanced features.
+
+Typical traces of the lxml memory issues may appear themselves as following
+abruption messages:
+
+    double free or corruption (out)
+    Aborted (core dumped)
+
+We are working on collecting the problematic cases and hope to help the LXML
+with patches. You may help us by providing minified XML fragments.
+
+Unfortunately, currently there are not general recommendation to avoid this
+kind of issues rather than circumvent some advanced XML constructions (e.g.
+file `!ENTITY` may be replaced with direct emplacement of XML content). Also,
+if you are working in virtual environment, consider using
+`--system-site-packages` -- these bugs are known to be resolved this way at
+least at some cases.
+

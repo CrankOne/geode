@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, Response, url_for, make_response
+from flask import Blueprint, render_template, request, Response, url_for, make_response, current_app
 from flask.views import MethodView as FlaskMethodView
 
 def qpar_as_bool(pn, default):
@@ -25,9 +25,10 @@ class GeometryAPI(FlaskMethodView):
             200 -- ok
             404 -- setup not found
         """
+        print(current_app.extensions['geode_gdml'].lib.items.keys())
         if not setupID:
             pass  # ... TODO: render XML/JSON of the available setups with HATEOAS
-        if contentType.lower() in {'gdml', 'GDML', 'xml', 'XML'}:
+        if contentType and contentType.lower() in {'gdml', 'GDML', 'xml', 'XML'}:
             # Options for GDML rendering
             restrained = qpar_as_bool('restrained', False)
             disableExtensions = qpar_as_bool('disableExtensions', False)

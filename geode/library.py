@@ -195,9 +195,9 @@ import sys  # XXX
 #if root:
 #    root.export( sys.stdout, 0, name_='gdml' )
 
-lib = Library()
-lib.import_fs_subtree(sys.argv[1])
-for k in lib.items.keys():
-    print(k)
+#lib = Library()
+#lib.import_fs_subtree(sys.argv[1])
+#for k in lib.items.keys():
+#    print(k)
 
 

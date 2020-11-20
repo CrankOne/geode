@@ -68,3 +68,8 @@ if you are working in virtual environment, consider using
 `--system-site-packages` -- these bugs are known to be resolved this way at
 least at some cases.
 
+...
+
+`serve.py` implements a Flask server embedding _Geode_ routines
+as a [flask extension](https://flask.palletsprojects.com/en/1.1.x/extensiondev/).
+

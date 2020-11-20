@@ -148,7 +148,7 @@ class Library(object):
         into current instance.
         """
         L = logging.getLogger(__name__)
-        for keys, fPath in files_at(baseDir,
+        for k, fPath in files_at(baseDir,
                 lambda fn: any( map(lambda ext: fn.endswith(ext), gdmlExtensions) )):
             with open(fPath, 'r') as f:
                 gdmlData, warns, err = parse_GDML( f
@@ -157,19 +157,20 @@ class Library(object):
                         , schema=self._schema
                         )
             if not err:
-                self.items[tuple(keys)] = { 'file': fPath
-                                          , 'warnings': warns
-                                          , 'data': gdmlData
-                                          }
+                self.items[tuple(k)] = { 'file': fPath
+                                       , 'warnings': warns
+                                       , 'data': gdmlData
+                                       }
                 if warns:
                     for w in warns:
                         L.warning('File "%s" import warning: %s'%(fPath, w))
                 L.info('File "%s" imported.'%fPath)
             else:
-                L.error('Failed to import "%s". Error:'%fPath)
-                L.exception(err)
+                L.error('Failed to import "%s".'%fPath)
+                if err:
+                    L.exception(err)
 
-import sys  # XXX
+#import sys  # XXX
 # any( map( lambda ext: f.endswith(ext), templateExtensions ))
 #collect_templates(sys.argv[1])
 

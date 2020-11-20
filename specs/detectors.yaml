@@ -1,0 +1,52 @@
+# Define some boilerplate definitions for items below. This boilerplate objects
+# are prefixed with `x-' to make difference from the items directly taken into
+# account by geometry builder.
+
+# Define the Micromega boilerplate
+x-MM: &MM
+    geometry: MuMega/MM-simple.gdml # common GDML entity used by builder for MuMegas
+    posUnit: mm
+    rotUnit: deg
+x-GM: &GM
+    geometry: GEM/GM-simple.gdml
+    posUnit: mm
+    rotUnit: deg
+
+# Placements defines positions of stations with 6-tuple
+# List of assemblies present in setup will be taken from this lines
+assemblies:
+    #                                   X         Y              Z     aX    aY     aZ
+    MM1X: {<<: *MM, placement: [    -1.81,   -0.616,      -1967.00,     0,    0,  -45.] }
+    MM1Y: {<<: *MM, placement: [    -1.81,   -0.616,      -1967.01,     0,    0, -135.] }
+    MM2X: {<<: *MM, placement: [   -0.909,   -0.582,      -1958.00,     0,    0,   45.] }
+    MM2Y: {<<: *MM, placement: [   -0.909,   -0.582,      -1958.01,     0,    0,  -45.] }
+    MM3X: {<<: *MM, placement: [    -1.83,    -0.13,      -1822.00,     0,    0,  -45.] }
+    MM3Y: {<<: *MM, placement: [    -1.83,    -0.13,      -1822.01,     0,    0, -135.] }
+    MM4X: {<<: *MM, placement: [    -0.38,     -0.8,      -1813.00,     0,    0,  -45.] }
+    MM4Y: {<<: *MM, placement: [    -0.38,     -0.8,      -1813.01,     0,    0, -135.] }
+    MM5X: {<<: *MM, placement: [   -32.51,    -0.85,       -317.00,     0,    0,   45.] }
+    MM5Y: {<<: *MM, placement: [   -32.51,    -0.85,       -317.01,     0,    0,  -45.] }
+    MM7X: {<<: *MM, placement: [   -36.41,   -0.025,       -103.00,     0,    0,  -45.] }
+    MM7Y: {<<: *MM, placement: [   -36.41,   -0.025,       -103.01,     0,    0, -135.] }
+    GM1X: {<<: *GM, placement: [    -29.4,        0,       -300.30,     0,    0,    0.] }
+    GM1Y: {<<: *GM, placement: [    -29.4,        0,       -300.31,     0,    0,   90.] }
+    GM2X: {<<: *GM, placement: [    -34.9,        0,       -112.60,     0,    0,    0.] }
+    GM2Y: {<<: *GM, placement: [    -34.9,        0,       -112.61,     0,    0,   90.] }
+    GM3X: {<<: *GM, placement: [    -34.2,        0,       -238.20,     0,    0,    0.] }
+    GM3Y: {<<: *GM, placement: [    -34.2,        0,       -238.21,     0,    0,   90.] }
+    GM4X: {<<: *GM, placement: [    -34.3,        0,       -136.00,     0,    0,    0.] }
+    GM4Y: {<<: *GM, placement: [    -34.3,        0,       -136.01,     0,    0,   90.] }
+
+# Overriding block will be applied to geometrical entities (re-)defining their
+# parameters based on certain criteria. This is the array of objects that will
+# be applied in order (last change takes precedence)
+#override:
+#    - match: 'regex:MM.*'
+#      model: MuMega
+#      define: {width: 8cm, height: 8cm, resolution: 0.02cm, nWires: 320}
+#      # ^^^ def-const/def-var/def-quantity
+#    - match: 'regex:GM.*'
+#      model: GEM
+#      define: {width: 10cm, height: 10cm, resolution: 0.05cm, nWires: 256}
+
+

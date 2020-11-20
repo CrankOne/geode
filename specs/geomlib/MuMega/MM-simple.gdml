@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE gdml [
+    <!ENTITY defines    SYSTEM "../defines.igdml">
+    <!ENTITY materials  SYSTEM "../materials.igdml">
+    <!ENTITY solids     SYSTEM "../solids.igdml">
+]>
+<!--
+    A rough and primitive micromega description as box filled with gas mixture
+--> 
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+<define>
+    &defines;
+    <constant name="nWires" value="320"/>
+    <quantity type="length" name="resolution" value="0.2" unit="mm"/>
+    <quantity type="length" name="width" value="80" unit="mm"/>
+    <quantity type="length" name="height" value="80" unit="mm"/>
+    <quantity type="length" name="thickness" value="8" unit="mm"/>
+</define>
+
+<materials>
+    &materials;
+</materials>
+
+<solids>
+    &solids;
+    <box name="aBox" x="width" y="height" z="thickness"/>
+</solids>
+
+<structure>
+    <volume name="logicGasBox">
+        <materialref ref="TODO"/>
+        <solidref ref="aBox"/>
+    </volume>
+
+    <volume name="World">
+        <materialref ref="Air"/>
+        <solidref ref="Hall"/>
+        <!-- ^^^ note: "Hall" volume is provided with `solids' ENTITY ref -->
+        <physvol>
+            <volumeref ref="logicGasBox"/>
+        </physvol>
+    </volume>
+</structure>
+
+<setup version="1.0" name="Default">
+    <world ref="World"/>
+</setup>
+
+</gdml>
+
+<!--
+vi:ft=xml
+-->

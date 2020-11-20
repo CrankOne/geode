@@ -10,7 +10,7 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 <define>
-    &defines;
+    <!-- &defines; -->
     <constant name="nWiresGEM" value="256"/>
     <quantity type="length" name="resolution" value="0.5" unit="mm"/>
     <quantity type="length" name="width" value="100" unit="mm"/>
@@ -19,22 +19,30 @@
 </define>
 
 <materials>
-    &materials;
+    <!-- &materials; -->
+
+    <material name="GEMs_mixture">
+        <!-- TODO: not precise! -->
+        <D value="0.00128" />
+        <fraction n="0.8" ref="G4_CARBON_DIOXIDE" />
+        <fraction n="0.2" ref="G4_Ar" />
+    </material>
 </materials>
 
 <solids>
-    &solids;
+    <!-- &solids; -->
+    <box name="Hall" x="1.5*width" y="1.5*height" z="1.5*thickness" />
     <box name="aBox" x="width" y="height" z="thickness"/>
 </solids>
 
 <structure>
     <volume name="logicGasBox">
-        <materialref ref="TODO"/>
+        <materialref ref="GEMs_mixture"/>
         <solidref ref="aBox"/>
     </volume>
 
-    <volume name="World">
-        <materialref ref="Air"/>
+    <volume name="GM_World">
+        <materialref ref="G4_AIR"/>
         <solidref ref="Hall"/>
         <!-- ^^^ note: "Hall" volume is provided with `solids' ENTITY ref -->
         <physvol>
@@ -44,7 +52,7 @@
 </structure>
 
 <setup version="1.0" name="Default">
-    <world ref="World"/>
+    <world ref="GM_World"/>
 </setup>
 
 </gdml>

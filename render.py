@@ -17,24 +17,27 @@ with open('specs/detectors.yaml') as f:  # TODO: ARG
 lib = GDMLLibrary()
 lib.import_fs_subtree('specs/geomlib')  # TODO: ARG
 
-print('Geometry library read. Available assemblies:')
-for k in lib.items.keys():
-    print('  %s'%('/'.join(k)))
+#print('Geometry library read. Available assemblies:')
+#for k in lib.items.keys():
+#    print('  %s'%('/'.join(k)))
+sys.stdout.write("""<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE gdml>
+""")
 
 # NOTE: below, this is for unrestrained!
 
 # Build the setup object from YAML definitions
+solids = GDML.solids()
+defines = GDML.defineType()
 # - create world volume (TODO: take dimensions from a config)
-solidWorld = GDML.box( name="solidWorld", x=5, y=1, z=20, lunit='m' ) 
-solids = GDML.SolidType()
-solids.add_solid(solidWorld)
+solidWorld = GDML.box( name="solidWorld", x=5, y=1, z=20, lunit='m' )
+solids.add_Solid(solidWorld)
 worldVol = GDML.VolumeType( name="World"
                           , materialref=GDML.ReferenceType(ref='G4_AIR')
                           , solidref=GDML.ReferenceType(ref=solidWorld.get_name())
                           )
 # - iterate over enumerated entries, emplacing the definitions into structure
 # as <file/> instances with certain placements
-defines = GDML.defineType()
 for k, cfgPs in detectors['assemblies'].items():
     if 'geometry' not in cfgPs:
         L.error('The assembly "%s" does not request any geometry. Skip.'%k)
@@ -71,18 +74,20 @@ for k, cfgPs in detectors['assemblies'].items():
     worldVol.add_physvol( GDML.SinglePlacementType( **placementDict ) )
 structure = GDML.structure()
 structure.add_volume(worldVol)
-# - create the default setup
-#setup = GDML.setupType( name="Default"
-                      #, version="1.0"
-                      #, world=...
-                      #)
-#gdmlRoot.add_setup(setup)
 # - create the GDS object for output document
 gdmlRoot = GDML.gdml()
+
 gdmlRoot.set_define(defines)
 #gdmlRoot.set_materials(materials)
 gdmlRoot.set_solids(solids)
 gdmlRoot.set_structure(structure)
+# - create the default setup
+setup = GDML.setupType( name="Default"
+                      , version="1.0"
+                      , world=GDML.ReferenceType(ref='World')
+                      )
+gdmlRoot.add_setup(setup)
+
 # xxx, print
 gdmlRoot.export( sys.stdout, 0, name_='gdml' )
 

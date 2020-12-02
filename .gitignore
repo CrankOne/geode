@@ -28,3 +28,4 @@ CMakeFiles
 *.rej
 geode/GDMLParser/v*/*.gz
 geode/GDMLParser/v*/GDML_*/**
+*.log.txt

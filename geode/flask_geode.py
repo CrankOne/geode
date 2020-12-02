@@ -2,6 +2,8 @@
 An extension module for Flask application.
 """
 
+import logging
+
 from flask import current_app, _app_ctx_stack
 from geode.library import Library
 
@@ -12,8 +14,12 @@ class GeodeForFlask(object):
             self.init_app(app)
 
     def read_lib(self):
+        L = logging.getLogger(__name__)
+        L.debug('Loading geometry library subtree'
+                ' from "%s"'%current_app.config['GDML_LIBRARY'])
         l = Library()
         l.import_fs_subtree(current_app.config['GDML_LIBRARY'])
+        L.debug("Geometry library subtree imported.")
         return l
 
     def init_app(self, app):

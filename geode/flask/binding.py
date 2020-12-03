@@ -1,13 +1,21 @@
 """
-An extension module for Flask application.
+Application extension.
 """
 
-import logging
-
 from flask import current_app, _app_ctx_stack
+import logging
 from geode.library import Library
 
 class GeodeForFlask(object):
+    """
+    Flask extension for Geode. Usage:
+
+        from geode.flask_geode import GeodeForFlask
+        gdmlLib = GeodeForFlask(app)
+
+    The `GDML_LIBRARY' config variable shall denote the path for the geometry
+    library subtree.
+    """
     def __init__(self, app=None):
         if app is not None:
             self.app = app
@@ -33,3 +41,4 @@ class GeodeForFlask(object):
             if not hasattr(ctx, 'geode_gdml'):
                 ctx.geode_gdml = self.read_lib()
             return ctx.geode_gdml
+

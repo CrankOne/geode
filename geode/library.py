@@ -1,5 +1,6 @@
 import os
 import io
+import re
 import logging
 from lxml import etree as lxmlETree
 import pkg_resources as pkgResources
@@ -41,6 +42,13 @@ class WarningsCollector(object):
 
     def clear_messages(self):
         self.messages = []
+
+def normalize_item_key(key):
+    if type(key) is str:
+        key = tuple(key.split(','))
+    if key and key[-1].endswith('.gdml'):
+        key[-1] = re.sub( '\.gdml$', '', key[-1])
+    return key
 
 def parse_GDML( gdml
               , version=None
@@ -156,6 +164,7 @@ class Library(object):
                         , lxmlParseKwargs=lxmlParseKwargs
                         , schema=self._schema
                         )
+            k = normalize_item_key(k)
             if not err:
                 self.items[tuple(k)] = { 'file': fPath
                                        , 'warnings': warns
@@ -169,6 +178,7 @@ class Library(object):
                 L.error('Failed to import "%s".'%fPath)
                 if err:
                     L.exception(err)
+                self.items[tuple(k)] = { 'errors' : err }
 
 #import sys  # XXX
 # any( map( lambda ext: f.endswith(ext), templateExtensions ))

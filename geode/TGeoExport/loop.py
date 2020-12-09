@@ -23,10 +23,10 @@
 # SOFTWARE.
 
 from __future__ import print_function
-from extGDML.clhepEvaluator import Evaluator
-from extGDML.root.refResolve import get_or_resolve_position, \
-                                    get_or_resolve_rotation
-#                                    get_or_resolve_scale
+from geode.evaluator import Evaluator
+from .refResolve import get_or_resolve_position, \
+                        get_or_resolve_rotation
+#                       get_or_resolve_scale
 import logging
 
 def treat_loop_element( I, gdmlLoopNode, callback,

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Nov 18 09:47:08 2020 by generateDS.py version 2.37.1.
+# Generated Mon Dec  7 15:31:42 2020 by generateDS.py version 2.37.6.
 # Python 3.7.8 (default, Aug 15 2020, 19:20:38)  [GCC 9.3.0]
 #
 # Command line options:
@@ -12,27 +12,32 @@
 #   ('--export', 'write literal etree')
 #   ('--root-element', 'gdml')
 #   ('-s', 'subclasses.py')
+#   ('-u', '../gdml_methods.py')
 #
 # Command line arguments:
 #   GDML_3_1_6/schema/gdml.xsd
 #
 # Command line:
-#   /var/src/.venv/bin/generateDS.py -m -f -o "classes.py" --export="write literal etree" --root-element="gdml" -s "subclasses.py" GDML_3_1_6/schema/gdml.xsd
+#   /var/src/venv-sys-site/bin/generateDS.py -m -f -o "classes.py" --export="write literal etree" --root-element="gdml" -s "subclasses.py" -u "../gdml_methods.py" GDML_3_1_6/schema/gdml.xsd
 #
 # Current working directory (os.getcwd()):
 #   v3_1_6
 #
 
+import sys
+try:
+    ModulenotfoundExp_ = ModuleNotFoundError
+except NameError:
+    ModulenotfoundExp_ = ImportError
 from six.moves import zip_longest
 import os
-import sys
 import re as re_
 import base64
 import datetime as datetime_
 import decimal as decimal_
 try:
     from lxml import etree as etree_
-except ModuleNotFoundError:
+except ModulenotfoundExp_ :
     from xml.etree import ElementTree as etree_
 
 
@@ -111,11 +116,11 @@ def parsexmlstring_(instring, parser=None, **kwargs):
 
 try:
     from generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
-except ModuleNotFoundError:
+except ModulenotfoundExp_ :
     GenerateDSNamespaceDefs_ = {}
 try:
     from generatedsnamespaces import GenerateDSNamespaceTypePrefixes as GenerateDSNamespaceTypePrefixes_
-except ModuleNotFoundError:
+except ModulenotfoundExp_ :
     GenerateDSNamespaceTypePrefixes_ = {}
 
 #
@@ -126,7 +131,7 @@ except ModuleNotFoundError:
 #
 try:
     from generatedscollector import GdsCollector as GdsCollector_
-except ModuleNotFoundError:
+except ModulenotfoundExp_ :
 
     class GdsCollector_(object):
 
@@ -160,7 +165,7 @@ except ModuleNotFoundError:
 
 try:
     from enum import Enum
-except ModuleNotFoundError:
+except ModulenotfoundExp_ :
     Enum = object
 
 #
@@ -172,7 +177,7 @@ except ModuleNotFoundError:
 
 try:
     from generatedssuper import GeneratedsSuper
-except ModuleNotFoundError as exp:
+except ModulenotfoundExp_ as exp:
     
     class GeneratedsSuper(object):
         __hash__ = object.__hash__
@@ -964,6 +969,9 @@ class stateType(str, Enum):
 
 class IdentifiableVolumeType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -1094,6 +1102,18 @@ class SinglePlacementType(GeneratedsSuper):
     """Represents a single unique copy a of an associated logical volume
     in geometrical hierarchy"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('copynumber', 'xs:integer', 0, 1, {'use': 'optional'}),
+        MemberSpec_('file', 'FileReferenceType', 0, 0, {'name': 'file', 'type': 'FileReferenceType'}, 1),
+        MemberSpec_('volumeref', 'ReferenceType', 0, 0, {'name': 'volumeref', 'type': 'ReferenceType'}, 1),
+        MemberSpec_('position', 'positionType', 0, 1, {'name': 'position', 'type': 'positionType'}, 2),
+        MemberSpec_('positionref', 'ReferenceType', 0, 1, {'name': 'positionref', 'type': 'ReferenceType'}, 2),
+        MemberSpec_('rotation', 'rotationType', 0, 1, {'name': 'rotation', 'type': 'rotationType'}, 3),
+        MemberSpec_('rotationref', 'ReferenceType', 0, 1, {'name': 'rotationref', 'type': 'ReferenceType'}, 3),
+        MemberSpec_('scale', 'scaleType', 0, 1, {'name': 'scale', 'type': 'scaleType'}, 4),
+        MemberSpec_('scaleref', 'ReferenceType', 0, 1, {'name': 'scaleref', 'type': 'ReferenceType'}, 4),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, copynumber=None, file=None, volumeref=None, position=None, positionref=None, rotation=None, rotationref=None, scale=None, scaleref=None, gds_collector_=None, **kwargs_):
@@ -1432,6 +1452,14 @@ class DivisionPlacementType(GeneratedsSuper):
     """Represents a division of the associated logical volume
     in geometrical hierarchy"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('axis', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('number', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('width', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('offset', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('volumeref', 'ReferenceType', 0, 0, {'name': 'volumeref', 'type': 'ReferenceType'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, axis=None, number=None, width=None, offset=None, unit='mm', volumeref=None, gds_collector_=None, **kwargs_):
@@ -1662,6 +1690,16 @@ class VolumeType(IdentifiableVolumeType):
     geometrical
     hierarchies in space"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('materialref', 'ReferenceType', 0, 0, {'name': 'materialref', 'type': 'ReferenceType'}, None),
+        MemberSpec_('solidref', 'ReferenceType', 0, 0, {'name': 'solidref', 'type': 'ReferenceType'}, None),
+        MemberSpec_('physvol', 'SinglePlacementType', 1, 1, {'maxOccurs': 'unbounded', 'name': 'physvol', 'type': 'SinglePlacementType'}, 5),
+        MemberSpec_('divisionvol', 'DivisionPlacementType', 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'divisionvol', 'type': 'DivisionPlacementType'}, 5),
+        MemberSpec_('replicavol', 'ReplicaPlacementType', 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'replicavol', 'ref': 'replicavol', 'type': 'replicavol'}, 5),
+        MemberSpec_('paramvol', 'ParameterisedPlacementType', 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'paramvol', 'type': 'ParameterisedPlacementType'}, 5),
+        MemberSpec_('loop', 'loop', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'loop', 'ref': 'loop', 'type': 'loop'}, None),
+        MemberSpec_('auxiliary', 'AuxiliaryType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'auxiliary', 'type': 'AuxiliaryType'}, None),
+    ]
     subclass = None
     superclass = IdentifiableVolumeType
     def __init__(self, name=None, materialref=None, solidref=None, physvol=None, divisionvol=None, replicavol=None, paramvol=None, loop=None, auxiliary=None, gds_collector_=None, **kwargs_):
@@ -2013,6 +2051,11 @@ class AssemblyVolumeType(IdentifiableVolumeType):
     placements in space
     independent of each other"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('physvol', 'SinglePlacementType', 1, 0, {'maxOccurs': 'unbounded', 'name': 'physvol', 'type': 'SinglePlacementType'}, 6),
+        MemberSpec_('replicavol', 'ReplicaPlacementType', 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'replicavol', 'ref': 'replicavol', 'type': 'replicavol'}, 6),
+        MemberSpec_('paramvol', 'ParameterisedPlacementType', 0, 0, {'maxOccurs': '1', 'minOccurs': '1', 'name': 'paramvol', 'type': 'ParameterisedPlacementType'}, 6),
+    ]
     subclass = None
     superclass = IdentifiableVolumeType
     def __init__(self, name=None, physvol=None, replicavol=None, paramvol=None, gds_collector_=None, **kwargs_):
@@ -2200,6 +2243,10 @@ class AssemblyVolumeType(IdentifiableVolumeType):
 class LogicalSurfaceType(GeneratedsSuper):
     """Base type for logical surfaces (for the moment only optical)"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('surfaceproperty', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, surfaceproperty=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -2353,6 +2400,9 @@ class LogicalSurfaceType(GeneratedsSuper):
 class bordersurface(LogicalSurfaceType):
     """Surface between two physical volumes"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('physvolref', 'ReferenceType', 0, 0, {'name': 'physvolref', 'type': 'ReferenceType'}, None),
+    ]
     subclass = None
     superclass = LogicalSurfaceType
     def __init__(self, name=None, surfaceproperty=None, physvolref=None, gds_collector_=None, **kwargs_):
@@ -2477,6 +2527,9 @@ class bordersurface(LogicalSurfaceType):
 class skinsurface(LogicalSurfaceType):
     """Surface between two physical volumes"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('volumeref', 'ReferenceType', 0, 0, {'name': 'volumeref', 'type': 'ReferenceType'}, None),
+    ]
     subclass = None
     superclass = LogicalSurfaceType
     def __init__(self, name=None, surfaceproperty=None, volumeref=None, gds_collector_=None, **kwargs_):
@@ -2601,6 +2654,13 @@ class skinsurface(LogicalSurfaceType):
 class structure(GeneratedsSuper):
     """Definitions of a geometrical hierarchy of a set of volumes"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('volume', 'VolumeType', 1, 0, {'name': 'volume', 'type': 'VolumeType'}, 7),
+        MemberSpec_('assembly', 'AssemblyVolumeType', 1, 0, {'name': 'assembly', 'type': 'AssemblyVolumeType'}, 7),
+        MemberSpec_('loop', 'loop', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'loop', 'ref': 'loop', 'type': 'loop'}, 7),
+        MemberSpec_('ParameterisationAlgorithm', 'ParameterisationAlgorithmType', 1, 0, {'name': 'ParameterisationAlgorithm', 'ref': 'ParameterisationAlgorithm', 'type': 'ParameterisationAlgorithm'}, 7),
+        MemberSpec_('Surface', 'LogicalSurfaceType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'Surface', 'ref': 'Surface', 'type': 'Surface'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, volume=None, assembly=None, loop=None, ParameterisationAlgorithm=None, Surface=None, gds_collector_=None, **kwargs_):
@@ -2924,6 +2984,15 @@ class gdml(GeneratedsSuper):
     backward compatible changes which resolve a
     problem in GDML Schema are applied"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('version', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('define', 'defineType', 0, 0, {'name': 'define', 'ref': 'define', 'type': 'define'}, None),
+        MemberSpec_('materials', 'materials', 0, 0, {'name': 'materials', 'ref': 'materials', 'type': 'materials'}, None),
+        MemberSpec_('solids', 'solids', 0, 0, {'name': 'solids', 'ref': 'solids', 'type': 'solids'}, None),
+        MemberSpec_('structure', 'structure', 0, 0, {'name': 'structure', 'ref': 'structure', 'type': 'structure'}, None),
+        MemberSpec_('userinfo', 'userinfoType', 0, 1, {'maxOccurs': '1', 'minOccurs': '0', 'name': 'userinfo', 'type': 'userinfoType'}, None),
+        MemberSpec_('setup', 'setupType', 1, 0, {'maxOccurs': 'unbounded', 'name': 'setup', 'type': 'setupType'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, version='3.1.6', define=None, materials=None, solids=None, structure=None, userinfo=None, setup=None, gds_collector_=None, **kwargs_):
@@ -3200,6 +3269,10 @@ class gdml(GeneratedsSuper):
 
 class IdentifiableExpressionType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('valueOf_', ['InlineExpressionType', 'xs:string'], 0),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, valueOf_=None, gds_collector_=None, **kwargs_):
@@ -3321,6 +3394,9 @@ class IdentifiableExpressionType(GeneratedsSuper):
 class ConstantType(GeneratedsSuper):
     """An anonymous, local scope, value"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('value', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, value=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -3448,12 +3524,20 @@ class ConstantType(GeneratedsSuper):
             self.extensiontype_ = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
+    def get_numerical_value(self, E, forceEvaluation=False):
+        # (keep units unused, however may come from few descendants line)
+        if not hasattr(self, 'evaluatedVal') or forceEvaluation:
+            self.evaluatedVal = E.evaluate( self.get_value() )
+        return self.evaluatedVal
 # end class ConstantType
 
 
 class VariableType(GeneratedsSuper):
     """An anonymous, local scope, value"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('value', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, value=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -3581,12 +3665,20 @@ class VariableType(GeneratedsSuper):
             self.extensiontype_ = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
+    def get_numerical_value(self, E, forceEvaluation=False):
+        # (keep units unused, however may come from few descendants line)
+        if not hasattr(self, 'evaluatedVal') or forceEvaluation:
+            self.evaluatedVal = E.evaluate( self.get_value() )
+        return self.evaluatedVal
 # end class VariableType
 
 
 class IdentifiableConstantType(ConstantType):
     """Named (referenced), global scope, constant value"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ConstantType
     def __init__(self, value=None, name=None, gds_collector_=None, **kwargs_):
@@ -3697,12 +3789,27 @@ class IdentifiableConstantType(ConstantType):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(IdentifiableConstantType, self).buildChildren(child_, node, nodeName_, True)
         pass
+    def get_numerical_value(self, E, forceEvaluation=False,
+                            forceRedefinition=False):
+        """
+        Performs calculation of value by invokation parental
+        get_numerical_value() method and defines named value in evaluator.
+        The evaluator must have setVariable
+        """
+        v = super(self.__class__, self).get_numerical_value( E, forceEvaluation=forceRedefinition)
+        if (not E.findVariable(self.get_name()) or forceRedefinition):
+            print('var set: %s <- '%self.get_name(), v)  # XXX
+            E.setVariable( self.get_name(), v )
+        return v
 # end class IdentifiableConstantType
 
 
 class IdentifiableVariableType(VariableType):
     """Named (referenced), local scope, variable value"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = VariableType
     def __init__(self, value=None, name=None, gds_collector_=None, **kwargs_):
@@ -3813,6 +3920,18 @@ class IdentifiableVariableType(VariableType):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(IdentifiableVariableType, self).buildChildren(child_, node, nodeName_, True)
         pass
+    def get_numerical_value(self, E, forceEvaluation=False,
+                            forceRedefinition=False):
+        """
+        Performs calculation of value by invokation parental
+        get_numerical_value() method and defines named value in evaluator.
+        The evaluator must have setVariable
+        """
+        v = super(self.__class__, self).get_numerical_value( E, forceEvaluation=forceRedefinition)
+        if (not E.findVariable(self.get_name()) or forceRedefinition):
+            print('var set: %s <- '%self.get_name(), v)  # XXX
+            E.setVariable( self.get_name(), v )
+        return v
 # end class IdentifiableVariableType
 
 
@@ -3820,6 +3939,10 @@ class QuantityType(ConstantType):
     """An anonymous quantity, local scope, with a unit,
     (possibly of a given type) quantity"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = ConstantType
     def __init__(self, value=None, unit=None, type_=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -3967,12 +4090,37 @@ class QuantityType(ConstantType):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(QuantityType, self).buildChildren(child_, node, nodeName_, True)
         pass
+    def get_numerical_value(self, E, forceEvaluation=False):
+        """
+        Performs calculation of quantity in absolute units using provided
+        evaluator instance. Evaluator must have evaluate() method accepting
+        string expression.
+        The self.measuredVal attribute then will contain numerical value of initilal
+        expression in given units (dimensionless value).
+        The self.evaluatedVal then will contain numerical value of quantity in
+        absolute units (defined by evaluator instance.)
+        
+        The self.evaluatedVal is a returned value.
+        """
+        if not hasattr(self, 'evaluatedVal') or forceEvaluation:
+            self.measuredVal = E.evaluate( self.get_value() )
+            print('XX#1', self.measuredVal, self.get_unit())  # XXX
+            self.evaluatedVal = E.evaluate( "({v})*({u})".format( **{ 
+                    'v' : self.measuredVal,
+                    'u' : self.get_unit() } ) )
+        return self.evaluatedVal
+    def convert_value_in_units(self, E, units):
+        return E.convert_units( self.get_value(), fromUnit=self.get_unit(),
+                                                  toUnit=units )
 # end class QuantityType
 
 
 class IdentifiableQuantityType(QuantityType):
     """Named (referenced), global scope,(possibly of a given type) quantity"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, name=None, gds_collector_=None, **kwargs_):
@@ -4083,12 +4231,29 @@ class IdentifiableQuantityType(QuantityType):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(IdentifiableQuantityType, self).buildChildren(child_, node, nodeName_, True)
         pass
+    def get_numerical_value(self, E, forceEvaluation=False,
+                            forceRedefinition=False):
+        """
+        Performs calculation of value by invokation parental
+        get_numerical_value() method and defines named value in evaluator.
+        The evaluator must have setVariable
+        """
+        v = super(self.__class__, self).get_numerical_value( E, forceEvaluation=forceRedefinition)
+        if (not E.findVariable(self.get_name()) or forceRedefinition):
+            print('var set: %s <- '%self.get_name(), v)  # XXX
+            E.setVariable( self.get_name(), v )
+        return v
 # end class IdentifiableQuantityType
 
 
 class ThreeVectorType(GeneratedsSuper):
     """An anonymous, 3 dimensional, local scope, vector of doubles"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, x='0.0', y='0.0', z='0.0', extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -4264,6 +4429,11 @@ class ThreeVectorType(GeneratedsSuper):
 class MatrixType(GeneratedsSuper):
     """A bi-dimensional matrix of doubles"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('coldim', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('values', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, coldim=None, values=None, gds_collector_=None, **kwargs_):
@@ -4418,6 +4588,9 @@ class MatrixType(GeneratedsSuper):
 class IdentifiableThreeVectorType(ThreeVectorType):
     """Named (referenced), 3 dimensional, global scope, vector of doubles"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ThreeVectorType
     def __init__(self, x='0.0', y='0.0', z='0.0', name=None, gds_collector_=None, **kwargs_):
@@ -4535,6 +4708,10 @@ class QuantityVectorType(ThreeVectorType):
     """An anonymous, 3 dimensional, local scope, with a unit,
     (possibly of a given type) quantity vector"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = ThreeVectorType
     def __init__(self, x='0.0', y='0.0', z='0.0', unit=None, type_=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -4682,6 +4859,16 @@ class QuantityVectorType(ThreeVectorType):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(QuantityVectorType, self).buildChildren(child_, node, nodeName_, True)
         pass
+    def get_evaluated_components(self, E):
+        return (E.evaluate( self.x ),
+                E.evaluate( self.y ),
+                E.evaluate( self.z ))
+    def get_absolute_components(self, E):
+        s = "({c})*({u})"
+        unit = self.get_unit()
+        return (E.evaluate( s.format(**{'c':self.get_x(), 'u':unit}) ),
+                E.evaluate( s.format(**{'c':self.get_y(), 'u':unit}) ),
+                E.evaluate( s.format(**{'c':self.get_z(), 'u':unit}) ))
 # end class QuantityVectorType
 
 
@@ -4689,6 +4876,9 @@ class IdentifiableQuantityVectorType(QuantityVectorType):
     """Named (referenced), 3 dimensional, global scope, with a unit,
     (possibly of a given type) quantity vector"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = QuantityVectorType
     def __init__(self, x='0.0', y='0.0', z='0.0', unit=None, type_=None, name=None, gds_collector_=None, **kwargs_):
@@ -4805,6 +4995,9 @@ class IdentifiableQuantityVectorType(QuantityVectorType):
 class ReferenceType(GeneratedsSuper):
     """Local reference to an element of a named type"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('ref', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, ref=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -4934,6 +5127,10 @@ class ReferenceType(GeneratedsSuper):
 class FileReferenceType(GeneratedsSuper):
     """Reference to an external file containing sub-volume information"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:anyURI', 0, 0, {'use': 'required'}),
+        MemberSpec_('volname', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, volname=None, gds_collector_=None, **kwargs_):
@@ -5066,6 +5263,9 @@ class FileReferenceType(GeneratedsSuper):
 class ReferenceListType(GeneratedsSuper):
     """List of local references to a set of element of a named type"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('refs', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, refs=None, gds_collector_=None, **kwargs_):
@@ -5178,6 +5378,12 @@ class ReferenceListType(GeneratedsSuper):
 class AuxiliaryType(GeneratedsSuper):
     """Auxiliary information like sensitive detector declaration, etc."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('auxtype', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('auxvalue', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('auxunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('auxiliary', 'AuxiliaryType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'auxiliary', 'type': 'AuxiliaryType'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, auxtype=None, auxvalue=None, auxunit=None, auxiliary=None, gds_collector_=None, **kwargs_):
@@ -5371,6 +5577,17 @@ class defineType(GeneratedsSuper):
     """The global complex type is defined in order to reuse this defintion
     in derived schemas"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('loop', 'loop', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'loop', 'ref': 'loop', 'type': 'loop'}, 8),
+        MemberSpec_('constant', 'IdentifiableConstantType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'constant', 'type': 'IdentifiableConstantType'}, 8),
+        MemberSpec_('variable', 'IdentifiableVariableType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variable', 'type': 'IdentifiableVariableType'}, 8),
+        MemberSpec_('matrix', 'MatrixType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'matrix', 'type': 'MatrixType'}, 8),
+        MemberSpec_('quantity', 'IdentifiableQuantityType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'quantity', 'type': 'IdentifiableQuantityType'}, 8),
+        MemberSpec_('expression', 'IdentifiableExpressionType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expression', 'type': 'IdentifiableExpressionType'}, 8),
+        MemberSpec_('position', 'positionType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'position', 'type': 'positionType'}, 8),
+        MemberSpec_('rotation', 'rotationType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rotation', 'type': 'rotationType'}, 8),
+        MemberSpec_('scale', 'scaleType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'scale', 'type': 'scaleType'}, 8),
+    ]
     subclass = None
     superclass = None
     def __init__(self, loop=None, constant=None, variable=None, matrix=None, quantity=None, expression=None, position=None, rotation=None, scale=None, gds_collector_=None, **kwargs_):
@@ -5817,6 +6034,10 @@ class defineType(GeneratedsSuper):
 
 class positionType(IdentifiableQuantityVectorType):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = IdentifiableQuantityVectorType
     def __init__(self, x='0.0', y='0.0', z='0.0', unit=None, type_=None, name=None, gds_collector_=None, **kwargs_):
@@ -5953,6 +6174,10 @@ class positionType(IdentifiableQuantityVectorType):
 
 class rotationType(IdentifiableQuantityVectorType):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = IdentifiableQuantityVectorType
     def __init__(self, x='0.0', y='0.0', z='0.0', unit=None, type_=None, name=None, gds_collector_=None, **kwargs_):
@@ -6089,6 +6314,8 @@ class rotationType(IdentifiableQuantityVectorType):
 
 class scaleType(IdentifiableQuantityVectorType):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+    ]
     subclass = None
     superclass = IdentifiableQuantityVectorType
     def __init__(self, x='0.0', y='0.0', z='0.0', unit=None, type_=None, name=None, gds_collector_=None, **kwargs_):
@@ -6180,11 +6407,27 @@ class scaleType(IdentifiableQuantityVectorType):
         super(scaleType, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
+    def get_absolute_components(self, E):
+        s = "({c})*({u})"
+        unit = self.get_unit() if self.get_unit() else 1
+        return (E.evaluate( s.format(**{'c':self.get_x(), 'u':unit}) ),
+                E.evaluate( s.format(**{'c':self.get_y(), 'u':unit}) ),
+                E.evaluate( s.format(**{'c':self.get_z(), 'u':unit}) ))
 # end class scaleType
 
 
 class loop(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('for_', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('from_', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('to', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('step', 'xs:positiveInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('Solid', 'SolidType', 1, 0, {'maxOccurs': 'unbounded', 'name': 'Solid', 'ref': 'Solid', 'type': 'Solid'}, 9),
+        MemberSpec_('volume', 'VolumeType', 1, 0, {'name': 'volume', 'type': 'VolumeType'}, 9),
+        MemberSpec_('physvol', 'SinglePlacementType', 1, 0, {'name': 'physvol', 'type': 'SinglePlacementType'}, 9),
+        MemberSpec_('loop', 'loop', 1, 0, {'maxOccurs': 'unbounded', 'name': 'loop', 'type': 'loop'}, 9),
+    ]
     subclass = None
     superclass = None
     def __init__(self, for_=None, from_=None, to=None, step=None, Solid=None, volume=None, physvol=None, loop_member=None, gds_collector_=None, **kwargs_):
@@ -6687,6 +6930,10 @@ class loop(GeneratedsSuper):
 class AtomType(QuantityType):
     """Atomic mass, quantity type A, default unit g/mole"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -6824,6 +7071,10 @@ class AtomType(QuantityType):
 class DensityType(QuantityType):
     """Density"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -6961,6 +7212,22 @@ class DensityType(QuantityType):
 class MaterialType(GeneratedsSuper):
     """Base type for materials"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('formula', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('state', 'stateType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('property', 'propertyType1', 1, 1, {'maxOccurs': 'unbounded', 'name': 'property', 'type': 'propertyType1'}, 16),
+        MemberSpec_('RL', 'RLType2', 0, 1, {'name': 'RL', 'type': 'RLType2'}, 17),
+        MemberSpec_('RLref', 'ReferenceType', 0, 1, {'name': 'RLref', 'type': 'ReferenceType'}, 17),
+        MemberSpec_('AL', 'ALType3', 0, 1, {'name': 'AL', 'type': 'ALType3'}, 18),
+        MemberSpec_('ALref', 'ReferenceType', 0, 1, {'name': 'ALref', 'type': 'ReferenceType'}, 18),
+        MemberSpec_('T', 'TType4', 0, 1, {'name': 'T', 'type': 'TType4'}, 19),
+        MemberSpec_('Tref', 'ReferenceType', 0, 1, {'name': 'Tref', 'type': 'ReferenceType'}, 19),
+        MemberSpec_('P', 'PType5', 0, 1, {'name': 'P', 'type': 'PType5'}, 20),
+        MemberSpec_('Pref', 'ReferenceType', 0, 1, {'name': 'Pref', 'type': 'ReferenceType'}, 20),
+        MemberSpec_('MEE', 'MEEType6', 0, 1, {'name': 'MEE', 'type': 'MEEType6'}, 21),
+        MemberSpec_('MEEref', 'ReferenceType', 0, 1, {'name': 'MEEref', 'type': 'ReferenceType'}, 21),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, formula=None, state='unknown', property=None, RL=None, RLref=None, AL=None, ALref=None, T=None, Tref=None, P=None, Pref=None, MEE=None, MEEref=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -7439,6 +7706,13 @@ class MaterialType(GeneratedsSuper):
 class materials(GeneratedsSuper):
     """Materials description"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('loop', 'loop', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'loop', 'ref': 'loop', 'type': 'loop'}, 22),
+        MemberSpec_('define', 'defineType', 1, 1, {'minOccurs': '0', 'name': 'define', 'type': 'defineType'}, 22),
+        MemberSpec_('isotope', 'MaterialIsotopeType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'isotope', 'type': 'MaterialIsotopeType'}, 22),
+        MemberSpec_('element', 'MaterialElementType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'element', 'type': 'MaterialElementType'}, 22),
+        MemberSpec_('material', 'MaterialMixtureType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'material', 'type': 'MaterialMixtureType'}, 22),
+    ]
     subclass = None
     superclass = None
     def __init__(self, loop=None, define=None, isotope=None, element=None, material=None, gds_collector_=None, **kwargs_):
@@ -7730,6 +8004,13 @@ class materials(GeneratedsSuper):
 class MaterialIsotopeType(MaterialType):
     """Exported isotope typeNumber of nucleonsAtomic number"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('N', 'xs:positiveInteger', 0, 0, {'use': 'required'}),
+        MemberSpec_('Z', 'xs:double', 0, 0, {'use': 'required'}),
+        MemberSpec_('D', 'DensityType', 0, 1, {'name': 'D', 'type': 'DensityType'}, 23),
+        MemberSpec_('Dref', 'ReferenceType', 0, 1, {'name': 'Dref', 'type': 'ReferenceType'}, 23),
+        MemberSpec_('atom', 'AtomType', 0, 0, {'name': 'atom', 'type': 'AtomType'}, None),
+    ]
     subclass = None
     superclass = MaterialType
     def __init__(self, name=None, formula=None, state='unknown', property=None, RL=None, RLref=None, AL=None, ALref=None, T=None, Tref=None, P=None, Pref=None, MEE=None, MEEref=None, N=None, Z=None, D=None, Dref=None, atom=None, gds_collector_=None, **kwargs_):
@@ -7949,6 +8230,14 @@ class MaterialElementType(MaterialType):
     simple element or by a set
     of isotopes fractionsNumber of nucleonsAtomic number"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('N', 'xs:positiveInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('Z', 'xs:double', 0, 1, {'use': 'optional'}),
+        MemberSpec_('D', 'DensityType', 0, 1, {'name': 'D', 'type': 'DensityType'}, 24),
+        MemberSpec_('Dref', 'ReferenceType', 0, 1, {'name': 'Dref', 'type': 'ReferenceType'}, 24),
+        MemberSpec_('atom', 'AtomType', 0, 0, {'name': 'atom', 'type': 'AtomType'}, 25),
+        MemberSpec_('fraction', 'fractionType', 1, 0, {'maxOccurs': 'unbounded', 'name': 'fraction', 'type': 'fractionType'}, 25),
+    ]
     subclass = None
     superclass = MaterialType
     def __init__(self, name=None, formula=None, state='unknown', property=None, RL=None, RLref=None, AL=None, ALref=None, T=None, Tref=None, P=None, Pref=None, MEE=None, MEEref=None, N=None, Z=None, D=None, Dref=None, atom=None, fraction=None, gds_collector_=None, **kwargs_):
@@ -8213,6 +8502,14 @@ class MaterialMixtureType(MaterialType):
     The restriction is that one can't mix composition by atoms and fractions
     at the same time.Atomic number"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('Z', 'xs:double', 0, 1, {'use': 'optional'}),
+        MemberSpec_('D', 'DensityType', 0, 0, {'name': 'D', 'type': 'DensityType'}, 26),
+        MemberSpec_('Dref', 'ReferenceType', 0, 0, {'name': 'Dref', 'type': 'ReferenceType'}, 26),
+        MemberSpec_('atom', 'AtomType', 0, 0, {'name': 'atom', 'type': 'AtomType'}, 27),
+        MemberSpec_('composite', 'compositeType', 1, 0, {'maxOccurs': 'unbounded', 'name': 'composite', 'type': 'compositeType'}, 27),
+        MemberSpec_('fraction', 'fractionType7', 1, 0, {'maxOccurs': 'unbounded', 'name': 'fraction', 'type': 'fractionType7'}, 27),
+    ]
     subclass = None
     superclass = MaterialType
     def __init__(self, name=None, formula=None, state='unknown', property=None, RL=None, RLref=None, AL=None, ALref=None, T=None, Tref=None, P=None, Pref=None, MEE=None, MEEref=None, Z=None, D=None, Dref=None, atom=None, composite=None, fraction=None, gds_collector_=None, **kwargs_):
@@ -8487,6 +8784,11 @@ class SolidType(GeneratedsSuper):
     """Base solid typeLength unit of all dimensions used for this instance of
     solidAngle unit of angles used in definition of this solid"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, lunit='mm', aunit='radian', name=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -8656,6 +8958,18 @@ class SolidType(GeneratedsSuper):
 class BooleanSolidType(SolidType):
     """Base type for boolean solids"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('first', 'ReferenceType', 0, 0, {'name': 'first', 'type': 'ReferenceType'}, None),
+        MemberSpec_('second', 'ReferenceType', 0, 0, {'name': 'second', 'type': 'ReferenceType'}, None),
+        MemberSpec_('position', 'positionType', 0, 1, {'name': 'position', 'type': 'positionType'}, 28),
+        MemberSpec_('positionref', 'ReferenceType', 0, 1, {'name': 'positionref', 'type': 'ReferenceType'}, 28),
+        MemberSpec_('rotation', 'rotationType', 0, 1, {'name': 'rotation', 'type': 'rotationType'}, 29),
+        MemberSpec_('rotationref', 'ReferenceType', 0, 1, {'name': 'rotationref', 'type': 'ReferenceType'}, 29),
+        MemberSpec_('firstposition', 'positionType', 0, 1, {'name': 'firstposition', 'type': 'positionType'}, 30),
+        MemberSpec_('firstpositionref', 'ReferenceType', 0, 1, {'name': 'firstpositionref', 'type': 'ReferenceType'}, 30),
+        MemberSpec_('firstrotation', 'rotationType', 0, 1, {'name': 'firstrotation', 'type': 'rotationType'}, 31),
+        MemberSpec_('firstrotationref', 'ReferenceType', 0, 1, {'name': 'firstrotationref', 'type': 'ReferenceType'}, 31),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, first=None, second=None, position=None, positionref=None, rotation=None, rotationref=None, firstposition=None, firstpositionref=None, firstrotation=None, firstrotationref=None, gds_collector_=None, **kwargs_):
@@ -9004,12 +9318,21 @@ class BooleanSolidType(SolidType):
             self.firstrotationref = obj_
             obj_.original_tagname_ = 'firstrotationref'
         super(BooleanSolidType, self).buildChildren(child_, node, nodeName_, True)
+    def get_tagname(self):
+        return self.original_tagname_
 # end class BooleanSolidType
 
 
 class multiUnionNode(SolidType):
     """Base node for Multi-Union structure"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('solid', 'ReferenceType', 0, 0, {'name': 'solid', 'type': 'ReferenceType'}, None),
+        MemberSpec_('position', 'positionType', 0, 1, {'name': 'position', 'type': 'positionType'}, 32),
+        MemberSpec_('positionref', 'ReferenceType', 0, 1, {'name': 'positionref', 'type': 'ReferenceType'}, 32),
+        MemberSpec_('rotation', 'rotationType', 0, 1, {'name': 'rotation', 'type': 'rotationType'}, 33),
+        MemberSpec_('rotationref', 'ReferenceType', 0, 1, {'name': 'rotationref', 'type': 'ReferenceType'}, 33),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, solid=None, position=None, positionref=None, rotation=None, rotationref=None, gds_collector_=None, **kwargs_):
@@ -9238,6 +9561,9 @@ class multiUnion(SolidType):
     This Solid is constructed by multiUnionNodes;
     each Node is described by solid with its position and rotation."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('multiUnionNode', 'multiUnionNode', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'multiUnionNode', 'type': 'multiUnionNode'}, None),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, multiUnionNode=None, gds_collector_=None, **kwargs_):
@@ -9378,6 +9704,18 @@ class reflectedSolid(SolidType):
     rx, ry, rz are rotation angles around given axes and
     dx, dy, dz is the translation."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('solid', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('sx', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('sy', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('sz', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rx', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('ry', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rz', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('dx', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('dy', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('dz', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, solid=None, sx='1.0', sy='1.0', sz='1.0', rx='0.0', ry='0.0', rz='0.0', dx='0.0', dy='0.0', dz='0.0', gds_collector_=None, **kwargs_):
@@ -9688,6 +10026,11 @@ class scaledSolid(SolidType):
     """Scaled solid:
     For the scale component, values must be greater than zero."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('solidref', 'ReferenceType', 0, 0, {'name': 'solidref', 'type': 'ReferenceType'}, None),
+        MemberSpec_('scale', 'scaleType', 0, 0, {'name': 'scale', 'type': 'scaleType'}, 34),
+        MemberSpec_('scaleref', 'ReferenceType', 0, 0, {'name': 'scaleref', 'type': 'ReferenceType'}, 34),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, solidref=None, scale=None, scaleref=None, gds_collector_=None, **kwargs_):
@@ -9863,6 +10206,11 @@ class scaledSolid(SolidType):
 class SurfacePropertyType(GeneratedsSuper):
     """Base surface type"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('property', 'propertyType9', 1, 1, {'maxOccurs': 'unbounded', 'name': 'property', 'type': 'propertyType9'}, 36),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, type_='dielectric_dielectric', property=None, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -10052,6 +10400,12 @@ class SurfacePropertyType(GeneratedsSuper):
 class solids(GeneratedsSuper):
     """Solids definitions block"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('define', 'defineType', 1, 1, {'minOccurs': '0', 'name': 'define', 'type': 'defineType'}, 37),
+        MemberSpec_('Solid', 'SolidType', 1, 0, {'maxOccurs': 'unbounded', 'name': 'Solid', 'ref': 'Solid', 'type': 'Solid'}, 37),
+        MemberSpec_('SurfaceProperty', 'SurfacePropertyType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'SurfaceProperty', 'ref': 'SurfaceProperty', 'type': 'SurfaceProperty'}, 37),
+        MemberSpec_('loop', 'loop', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'loop', 'ref': 'loop', 'type': 'loop'}, 37),
+    ]
     subclass = None
     superclass = None
     def __init__(self, define=None, Solid=None, SurfaceProperty=None, loop=None, gds_collector_=None, **kwargs_):
@@ -10474,6 +10828,11 @@ class solids(GeneratedsSuper):
 class box(SolidType):
     """CSG box solid described by 3 dimensions of x, y, and z"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, x=None, y=None, z=None, gds_collector_=None, **kwargs_):
@@ -10640,6 +10999,12 @@ class twistedbox(SolidType):
     z length along z axis
     PhiTwist twist angle"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('PhiTwist', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, x=None, y=None, z=None, PhiTwist=None, gds_collector_=None, **kwargs_):
@@ -10837,6 +11202,19 @@ class twistedtrap(SolidType):
     x4 length along x of the side at y=+y2 of the face at +z
     Alph Angle with respect to the y axis from the centre of the side"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('PhiTwist', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('Theta', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('Phi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x3', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x4', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('Alph', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, PhiTwist=None, z=None, Theta=None, Phi=None, y1=None, x1=None, y2=None, x2=None, x3=None, x4=None, Alph=None, gds_collector_=None, **kwargs_):
@@ -11175,6 +11553,14 @@ class twistedtrd(SolidType):
     x2 length along x of the side at y=+y1 of the face at -z
     y2 length along y of the face at +z"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('PhiTwist', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, PhiTwist=None, z=None, y1=None, x1=None, y2=None, x2=None, gds_collector_=None, **kwargs_):
@@ -11403,6 +11789,11 @@ class paraboloid(SolidType):
     rhi radius at +dz
     dz half z length"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rlo', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rhi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('dz', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, rlo=None, rhi=None, dz=None, gds_collector_=None, **kwargs_):
@@ -11571,6 +11962,14 @@ class sphere(SolidType):
     starttheta starting angle of the segment in radians(0 <= theta <= PI)
     deltatheta delta angle of the segment in radians"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('starttheta', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltatheta', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, rmin='0.0', rmax=None, startphi='0.0', deltaphi=None, starttheta='0.0', deltatheta=None, gds_collector_=None, **kwargs_):
@@ -11801,6 +12200,13 @@ class ellipsoid(SolidType):
     zcut1 bottom plane cutting ellipsoid
     zcut2 top plane cutting ellispoid"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('ax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('by', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('cz', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('zcut1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zcut2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, ax=None, by=None, cz=None, zcut1='-1000000.0', zcut2='1000000.0', gds_collector_=None, **kwargs_):
@@ -12011,6 +12417,13 @@ class tube(SolidType):
     (startphi+deltaphi <= 2PI, startphi > -2PI)
     deltaphi Delta angle of the segment in radians"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, z=None, rmin='0.0', rmax=None, startphi='0.0', deltaphi=None, gds_collector_=None, **kwargs_):
@@ -12226,6 +12639,19 @@ class twistedtubs(SolidType):
     totphi total angle of all segments (constructors 2,4)
     phi phi angle of a segment (constructors 1,3)"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('twistedangle', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('endinnerrad', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('endouterrad', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('midinnerrad', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('midouterrad', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('negativeEndz', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('positiveEndz', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zlen', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('nseg', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('totphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('phi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, twistedangle=None, endinnerrad='0.0', endouterrad='0.0', midinnerrad='0.0', midouterrad='0.0', negativeEndz='0.0', positiveEndz='0.0', zlen='0.0', nseg='0', totphi='0.0', phi='0.0', gds_collector_=None, **kwargs_):
@@ -12564,6 +12990,19 @@ class cutTube(SolidType):
     lowX, lowY, lowZ Normal at lower Z plane
     highX, highY, highZ Normal at higher Z plane"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('lowX', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('lowY', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('lowZ', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('highX', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('highY', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('highZ', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, z=None, rmin='0.0', rmax=None, startphi='0.0', deltaphi=None, lowX=None, lowY=None, lowZ=None, highX=None, highY=None, highZ=None, gds_collector_=None, **kwargs_):
@@ -12901,6 +13340,15 @@ class cone(SolidType):
     startphi starting angle of the segment in radians
     deltaphi delta angle of the segment in radians"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rmin1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmin2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rmax2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, z=None, rmin1='0.0', rmin2='0.0', rmax1=None, rmax2=None, startphi='0.0', deltaphi=None, gds_collector_=None, **kwargs_):
@@ -13151,6 +13599,12 @@ class elcone(SolidType):
     zmax height of elliptical cone
     zcut upper cut plane level"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('dx', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('dy', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zmax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('zcut', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, dx=None, dy=None, zmax=None, zcut=None, gds_collector_=None, **kwargs_):
@@ -13340,6 +13794,11 @@ class polycone(SolidType):
     rmax outside radius at z/2
     z length in z"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zplane', 'ZPlaneType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'zplane', 'type': 'ZPlaneType'}, None),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, deltaphi=None, startphi='0.0', zplane=None, gds_collector_=None, **kwargs_):
@@ -13521,6 +13980,11 @@ class polycone(SolidType):
 
 class ZPlaneType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, z=None, rmin='0.0', rmax=None, gds_collector_=None, **kwargs_):
@@ -13682,6 +14146,11 @@ class genericPolycone(SolidType):
     deltaphi delta angle of the segment in radians
     and a set of points with (r,z)coordinates"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rzpoint', 'RZPointType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '3', 'name': 'rzpoint', 'type': 'RZPointType'}, None),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, deltaphi=None, startphi='0.0', rzpoint=None, gds_collector_=None, **kwargs_):
@@ -13863,6 +14332,10 @@ class genericPolycone(SolidType):
 
 class RZPointType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('r', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, r=None, z=None, gds_collector_=None, **kwargs_):
@@ -14008,6 +14481,14 @@ class para(SolidType):
     phi Azimuthal angle of the line joining the centres of the faces at -z and
     +z in z"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('alpha', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('theta', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('phi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, x=None, y=None, z=None, alpha=None, theta=None, phi=None, gds_collector_=None, **kwargs_):
@@ -14238,6 +14719,13 @@ class trd(SolidType):
     y2 Length along y at the surface positioned at +z
     z Length along z axis"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, x1=None, x2=None, y1=None, y2=None, z=None, gds_collector_=None, **kwargs_):
@@ -14456,6 +14944,19 @@ class trap(SolidType):
     alp2 Angle with respect to the y axis from the centre of the side at y =
     -y2 to the centre at y = +y2 of the face at +z"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('theta', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('phi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('alpha1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x3', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('x4', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('alpha2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, z=None, theta=None, phi=None, y1=None, x1=None, x2=None, alpha1=None, y2=None, x3=None, x4=None, alpha2=None, gds_collector_=None, **kwargs_):
@@ -14792,6 +15293,13 @@ class torus(SolidType):
     2PI, sphi gt -2PI
     deltaphi Delta angle of the segment in radians"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rtor', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, rmin=None, rmax=None, rtor=None, startphi=None, deltaphi=None, gds_collector_=None, **kwargs_):
@@ -14997,6 +15505,9 @@ class orb(SolidType):
     """CSG orb solid (simplified sphere with only rmax) is described by
     r Outside radius"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('r', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, r=None, gds_collector_=None, **kwargs_):
@@ -15121,6 +15632,12 @@ class polyhedra(SolidType):
     numsides number sides
     and a set of zplanes."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('numsides', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('zplane', 'ZPlaneType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'zplane', 'type': 'ZPlaneType'}, None),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, startphi=None, deltaphi=None, numsides=None, zplane=None, gds_collector_=None, **kwargs_):
@@ -15328,6 +15845,12 @@ class genericPolyhedra(SolidType):
     numsides number sides
     and a set of points with (r,z) coordinates."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('numsides', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rzpoint', 'RZPointType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '3', 'name': 'rzpoint', 'type': 'RZPointType'}, None),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, startphi=None, deltaphi=None, numsides=None, rzpoint=None, gds_collector_=None, **kwargs_):
@@ -15530,6 +16053,10 @@ class genericPolyhedra(SolidType):
 
 class TwoDimVertexType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, x=None, y=None, gds_collector_=None, **kwargs_):
@@ -15666,6 +16193,13 @@ class TwoDimVertexType(GeneratedsSuper):
 
 class SectionType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('zOrder', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('zPosition', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('xOffset', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('yOffset', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('scalingFactor', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, zOrder=None, zPosition=None, xOffset=None, yOffset=None, scalingFactor=None, gds_collector_=None, **kwargs_):
@@ -15868,6 +16402,10 @@ class xtru(SolidType):
     an unbounded (min. 3) number of vertices of the blueprint polygon
     and an unbounded number of Z sections."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('twoDimVertex', 'TwoDimVertexType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '3', 'name': 'twoDimVertex', 'type': 'TwoDimVertexType'}, None),
+        MemberSpec_('section', 'SectionType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '2', 'name': 'section', 'type': 'SectionType'}, None),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, twoDimVertex=None, section=None, gds_collector_=None, **kwargs_):
@@ -16049,6 +16587,13 @@ class hype(SolidType):
     outst outerStereo
     z z length"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('inst', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('outst', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, rmin=None, rmax=None, inst=None, outst=None, z=None, gds_collector_=None, **kwargs_):
@@ -16254,6 +16799,11 @@ class eltube(SolidType):
     """Volume representing a tube with elliptical
     cross section."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('dx', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('dy', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('dz', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, dx=None, dy=None, dz=None, gds_collector_=None, **kwargs_):
@@ -16416,6 +16966,12 @@ class eltube(SolidType):
 class tet(SolidType):
     """Volume representing a tetrahedron."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('vertex1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex3', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex4', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, vertex1=None, vertex2=None, vertex3=None, vertex4=None, gds_collector_=None, **kwargs_):
@@ -16608,6 +17164,25 @@ class arb8(SolidType):
     the other 4 vertices (v5,v6,v7,v8 each one with the x and y
     coordinates)."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('v1x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v1y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v2x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v2y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v3x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v3y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v4x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v4y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v5x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v5y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v6x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v6y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v7x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v7y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v8x', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('v8y', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('dz', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, v1x=None, v1y=None, v2x=None, v2y=None, v3x=None, v3y=None, v4x=None, v4y=None, v5x=None, v5y=None, v6x=None, v6y=None, v7x=None, v7y=None, v8x=None, v8y=None, dz=None, gds_collector_=None, **kwargs_):
@@ -17064,6 +17639,8 @@ class arb8(SolidType):
 class FacetType(GeneratedsSuper):
     """Base facet type"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+    ]
     subclass = None
     superclass = None
     def __init__(self, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -17175,6 +17752,12 @@ class FacetType(GeneratedsSuper):
 class triangular(FacetType):
     """Triangular facet."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('vertex1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex3', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = FacetType
     def __init__(self, vertex1=None, vertex2=None, vertex3=None, type_='ABSOLUTE', gds_collector_=None, **kwargs_):
@@ -17357,6 +17940,13 @@ class triangular(FacetType):
 class quadrangular(FacetType):
     """Quadrangular facet."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('vertex1', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex2', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex3', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('vertex4', 'ExpressionOrIDREFType', 0, 0, {'use': 'required'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = FacetType
     def __init__(self, vertex1=None, vertex2=None, vertex3=None, vertex4=None, type_='ABSOLUTE', gds_collector_=None, **kwargs_):
@@ -17560,6 +18150,9 @@ class quadrangular(FacetType):
 class tessellated(SolidType):
     """Tessellated solid"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('Facet', 'FacetType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'Facet', 'type': 'FacetType'}, None),
+    ]
     subclass = None
     superclass = SolidType
     def __init__(self, lunit='mm', aunit='radian', name=None, Facet=None, gds_collector_=None, **kwargs_):
@@ -17708,6 +18301,11 @@ class tessellated(SolidType):
 class opticalsurface(SurfacePropertyType):
     """Optical surface used by Geant4 optical processes"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('model', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('finish', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('value', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = SurfacePropertyType
     def __init__(self, name=None, type_='dielectric_dielectric', property=None, model='glisur', finish='polished', value='1.0', gds_collector_=None, **kwargs_):
@@ -17863,6 +18461,8 @@ class opticalsurface(SurfacePropertyType):
 class ReplicationAlgorithmType(GeneratedsSuper):
     """Abstract base for replication placement strategies"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+    ]
     subclass = None
     superclass = None
     def __init__(self, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -17979,6 +18579,16 @@ class AxisReplicationAlgorithmType(ReplicationAlgorithmType):
     position at the mother volume center and identity rotation;
     NOTE: THE ROTATION IS APPLIED TO ALL REPLICATED VOLUMES!"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('position', 'positionType', 0, 1, {'name': 'position', 'type': 'positionType'}, 38),
+        MemberSpec_('positionref', 'ReferenceType', 0, 1, {'name': 'positionref', 'type': 'ReferenceType'}, 38),
+        MemberSpec_('rotation', 'rotationType', 0, 1, {'name': 'rotation', 'type': 'rotationType'}, 39),
+        MemberSpec_('rotationref', 'ReferenceType', 0, 1, {'name': 'rotationref', 'type': 'ReferenceType'}, 39),
+        MemberSpec_('direction', 'directionType', 0, 0, {'name': 'direction', 'ref': 'direction', 'type': 'direction'}, 40),
+        MemberSpec_('directionref', 'ReferenceType', 0, 0, {'name': 'directionref', 'type': 'ReferenceType'}, 40),
+        MemberSpec_('width', 'QuantityType', 0, 0, {'name': 'width', 'ref': 'width', 'type': 'width'}, None),
+        MemberSpec_('offset', 'QuantityType', 0, 0, {'name': 'offset', 'ref': 'offset', 'type': 'offset'}, None),
+    ]
     subclass = None
     superclass = ReplicationAlgorithmType
     def __init__(self, position=None, positionref=None, rotation=None, rotationref=None, direction=None, directionref=None, width=None, offset=None, gds_collector_=None, **kwargs_):
@@ -18282,6 +18892,13 @@ class AxisReplicationAlgorithmType(ReplicationAlgorithmType):
 class ReplicaPlacementType(GeneratedsSuper):
     """Base type for replicated volumes"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('number', 'xs:positiveInteger', 0, 0, {'use': 'required'}),
+        MemberSpec_('copy_num_start', 'xs:positiveInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('copy_num_step', 'xs:positiveInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('volumeref', 'ReferenceType', 0, 0, {'name': 'volumeref', 'type': 'ReferenceType'}, None),
+        MemberSpec_('ReplicationAlgorithm', 'ReplicationAlgorithmType', 0, 0, {'name': 'ReplicationAlgorithm', 'ref': 'ReplicationAlgorithm', 'type': 'ReplicationAlgorithm'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, number=None, copy_num_start=1, copy_num_step=1, volumeref=None, ReplicationAlgorithm=None, gds_collector_=None, **kwargs_):
@@ -18496,6 +19113,13 @@ class ReplicaPlacementType(GeneratedsSuper):
 
 class directionType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('phi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rho', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, x='0.0', y='0.0', z='0.0', phi='0.0', rho='0.0', gds_collector_=None, **kwargs_):
@@ -18696,6 +19320,8 @@ class directionType(GeneratedsSuper):
 class DimensionsType(GeneratedsSuper):
     """Abstract base for parametrised dimensions"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+    ]
     subclass = None
     superclass = None
     def __init__(self, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -18807,6 +19433,12 @@ class DimensionsType(GeneratedsSuper):
 class BoxDimensionsType(DimensionsType):
     """Dimensions for parametrised Boxes."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, x='1.0', y='1.0', z='1.0', lunit='mm', gds_collector_=None, **kwargs_):
@@ -18989,6 +19621,14 @@ class BoxDimensionsType(DimensionsType):
 class TrdDimensionsType(DimensionsType):
     """Dimensions for parametrised Trd."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, x1='1.0', x2='1.0', y1='1.0', y2='1.0', z='1.0', lunit='mm', gds_collector_=None, **kwargs_):
@@ -19213,6 +19853,21 @@ class TrdDimensionsType(DimensionsType):
 class TrapDimensionsType(DimensionsType):
     """Dimensions for parametrised Trap."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('theta', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('phi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('alpha1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x3', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x4', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('alpha2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, z='1.0', theta='1.0', phi='1.0', y1='1.0', x1='1.0', x2='1.0', alpha1='1.0', y2='1.0', x3='1.0', x4='1.0', alpha2='1.0', lunit='mm', aunit='radian', gds_collector_=None, **kwargs_):
@@ -19583,6 +20238,15 @@ class TrapDimensionsType(DimensionsType):
 class TubeDimensionsType(DimensionsType):
     """Dimensions for parametrised Tubes."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('DeltaPhi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('InR', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('OutR', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('StartPhi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('hz', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, DeltaPhi='1.0', InR='1.0', OutR='1.0', StartPhi='0.0', hz='1.0', lunit='mm', aunit='radian', gds_collector_=None, **kwargs_):
@@ -19827,6 +20491,17 @@ class TubeDimensionsType(DimensionsType):
 class ConeDimensionsType(DimensionsType):
     """Dimensions for parametrised Cones."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rmin1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmin2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, rmin1='1.0', rmax1='1.0', rmin2='1.0', rmax2='1.0', z='1.0', startphi='0.0', deltaphi='1.0', lunit='mm', aunit='radian', gds_collector_=None, **kwargs_):
@@ -20113,6 +20788,16 @@ class ConeDimensionsType(DimensionsType):
 class SphereDimensionsType(DimensionsType):
     """Dimensions for parametrised Spheres."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('starttheta', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltatheta', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, rmin='1.0', rmax='1.0', starttheta='0.0', deltatheta='1.0', startphi='0.0', deltaphi='1.0', lunit='mm', aunit='radian', gds_collector_=None, **kwargs_):
@@ -20378,6 +21063,10 @@ class SphereDimensionsType(DimensionsType):
 class OrbDimensionsType(DimensionsType):
     """Dimensions for parametrised Orbs."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('r', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, r='1.0', lunit='mm', gds_collector_=None, **kwargs_):
@@ -20518,6 +21207,15 @@ class OrbDimensionsType(DimensionsType):
 class TorusDimensionsType(DimensionsType):
     """Dimensions for parametrised Torus."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rtor', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('startphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('deltaphi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, rmin='1.0', rmax='1.0', rtor='1.0', startphi='0.0', deltaphi='1.0', lunit='mm', aunit='radian', gds_collector_=None, **kwargs_):
@@ -20762,6 +21460,14 @@ class TorusDimensionsType(DimensionsType):
 class EllipsoidDimensionsType(DimensionsType):
     """Dimensions for parametrised Ellipsoid."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('ax', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('by', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('cz', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zcut1', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zcut2', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, ax='1.0', by='1.0', cz='1.0', zcut1='-1000000.0', zcut2='1000000.0', lunit='mm', gds_collector_=None, **kwargs_):
@@ -20986,6 +21692,16 @@ class EllipsoidDimensionsType(DimensionsType):
 class ParaDimensionsType(DimensionsType):
     """Dimensions for parametrised Paras."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('x', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('alpha', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('theta', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('phi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, x='1.0', y='1.0', z='1.0', alpha='1.0', theta='1.0', phi='1.0', lunit='mm', aunit='radian', gds_collector_=None, **kwargs_):
@@ -21251,6 +21967,14 @@ class ParaDimensionsType(DimensionsType):
 class PolyconeDimensionsType(DimensionsType):
     """Dimensions for parametrised Polycone."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('numRZ', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('startPhi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('openPhi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zplane', 'ZPlaneType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'zplane', 'type': 'ZPlaneType'}, None),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, numRZ='1.0', startPhi='0.0', openPhi='1.0', lunit='mm', aunit='radian', zplane=None, gds_collector_=None, **kwargs_):
@@ -21494,6 +22218,15 @@ class PolyconeDimensionsType(DimensionsType):
 class PolyhedraDimensionsType(DimensionsType):
     """Dimensions for parametrised Polyhedra."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('numRZ', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('numSide', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('startPhi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('openPhi', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('zplane', 'ZPlaneParamType', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'zplane', 'type': 'ZPlaneParamType'}, None),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, numRZ='1.0', numSide='1.0', startPhi='1.0', openPhi='1.0', lunit='mm', aunit='radian', zplane=None, gds_collector_=None, **kwargs_):
@@ -21757,6 +22490,11 @@ class PolyhedraDimensionsType(DimensionsType):
 
 class ZPlaneParamType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = None
     def __init__(self, z='0.0', rmin='0.0', rmax='1.0', gds_collector_=None, **kwargs_):
@@ -21915,6 +22653,15 @@ class ZPlaneParamType(GeneratedsSuper):
 class HypeDimensionsType(DimensionsType):
     """Dimensions for parametrised Hypes."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('rmin', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('rmax', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('inst', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('outst', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z', 'ExpressionOrIDREFType', 0, 1, {'use': 'optional'}),
+        MemberSpec_('lunit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('aunit', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = DimensionsType
     def __init__(self, rmin='1.0', rmax='1.0', inst='1.0', outst='1.0', z='1.0', lunit='mm', aunit='radian', gds_collector_=None, **kwargs_):
@@ -22159,6 +22906,8 @@ class HypeDimensionsType(DimensionsType):
 class ParameterisationAlgorithmType(GeneratedsSuper):
     """Abstract base for parameterised placement strategies"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+    ]
     subclass = None
     superclass = None
     def __init__(self, extensiontype_=None, gds_collector_=None, **kwargs_):
@@ -22271,6 +23020,9 @@ class PositionSizeParameterisationAlgorithmType(ParameterisationAlgorithmType):
     """Parameterised volumes get created using
     the tabularized position and sizes."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('parameters', 'ParametersType', 1, 0, {'maxOccurs': 'unbounded', 'name': 'parameters', 'type': 'ParametersType'}, None),
+    ]
     subclass = None
     superclass = ParameterisationAlgorithmType
     def __init__(self, parameters=None, gds_collector_=None, **kwargs_):
@@ -22408,6 +23160,11 @@ class PositionSizeParameterisationAlgorithmType(ParameterisationAlgorithmType):
 class ParameterisedPlacementType(GeneratedsSuper):
     """Base type for parameterised volumes"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('ncopies', 'xs:positiveInteger', 0, 0, {'use': 'required'}),
+        MemberSpec_('volumeref', 'ReferenceType', 0, 0, {'name': 'volumeref', 'type': 'ReferenceType'}, None),
+        MemberSpec_('ParameterisationAlgorithm', 'ParameterisationAlgorithmType', 0, 0, {'name': 'ParameterisationAlgorithm', 'ref': 'ParameterisationAlgorithm', 'type': 'ParameterisationAlgorithm'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, ncopies=None, volumeref=None, ParameterisationAlgorithm=None, gds_collector_=None, **kwargs_):
@@ -22579,6 +23336,11 @@ class ParameterisedPlacementType(GeneratedsSuper):
 class ParametersType(GeneratedsSuper):
     """Holds parameteres for parameterised volumes."""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('number', 'xs:positiveInteger', 0, 0, {'use': 'required'}),
+        MemberSpec_('position', 'positionType', 0, 0, {'name': 'position', 'type': 'positionType'}, None),
+        MemberSpec_('Dimensions', 'DimensionsType', 0, 0, {'name': 'Dimensions', 'ref': 'Dimensions', 'type': 'Dimensions'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, number=None, position=None, Dimensions=None, gds_collector_=None, **kwargs_):
@@ -22808,6 +23570,9 @@ class ParametersType(GeneratedsSuper):
 
 class userinfoType(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('auxiliary', 'AuxiliaryType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'auxiliary', 'type': 'AuxiliaryType'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, auxiliary=None, gds_collector_=None, **kwargs_):
@@ -22945,6 +23710,11 @@ class setupType(GeneratedsSuper):
     refferring to
     a given volume which becomes the top level volume"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('version', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('world', 'ReferenceType', 0, 0, {'name': 'world', 'type': 'ReferenceType'}, None),
+    ]
     subclass = None
     superclass = None
     def __init__(self, name=None, version=None, world=None, gds_collector_=None, **kwargs_):
@@ -23104,6 +23874,9 @@ class setupType(GeneratedsSuper):
 class propertyType(ReferenceType):
     """General material property (const or vector)"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ReferenceType
     def __init__(self, ref=None, name=None, gds_collector_=None, **kwargs_):
@@ -23220,6 +23993,10 @@ class propertyType(ReferenceType):
 class RLType(QuantityType):
     """Radiation length"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -23357,6 +24134,10 @@ class RLType(QuantityType):
 class ALType(QuantityType):
     """Absorption length"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -23494,6 +24275,10 @@ class ALType(QuantityType):
 class TType(QuantityType):
     """Temperature"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -23631,6 +24416,10 @@ class TType(QuantityType):
 class PType(QuantityType):
     """Pressure"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -23768,6 +24557,10 @@ class PType(QuantityType):
 class MEEType(QuantityType):
     """Ionisation potential or Mean Excitation Energy"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -23905,6 +24698,9 @@ class MEEType(QuantityType):
 class propertyType1(ReferenceType):
     """General material property (const or vector)"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ReferenceType
     def __init__(self, ref=None, name=None, gds_collector_=None, **kwargs_):
@@ -24021,6 +24817,10 @@ class propertyType1(ReferenceType):
 class RLType2(QuantityType):
     """Radiation length"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -24158,6 +24958,10 @@ class RLType2(QuantityType):
 class ALType3(QuantityType):
     """Absorption length"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -24295,6 +25099,10 @@ class ALType3(QuantityType):
 class TType4(QuantityType):
     """Temperature"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -24432,6 +25240,10 @@ class TType4(QuantityType):
 class PType5(QuantityType):
     """Pressure"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -24569,6 +25381,10 @@ class PType5(QuantityType):
 class MEEType6(QuantityType):
     """Ionisation potential or Mean Excitation Energy"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('unit', 'xs:string', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type_', 'xs:string', 0, 1, {'use': 'optional'}),
+    ]
     subclass = None
     superclass = QuantityType
     def __init__(self, value=None, unit=None, type_=None, gds_collector_=None, **kwargs_):
@@ -24707,6 +25523,9 @@ class fractionType(ReferenceType):
     """An isotope fraction of an element where n is the actual amount
     of the isotope in the element"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('n', 'xs:double', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ReferenceType
     def __init__(self, ref=None, n=None, gds_collector_=None, **kwargs_):
@@ -24827,6 +25646,9 @@ class compositeType(ReferenceType):
     to already defined simple elements where value of n in each means the
     number of atoms"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('n', 'xs:positiveInteger', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ReferenceType
     def __init__(self, ref=None, n=None, gds_collector_=None, **kwargs_):
@@ -24949,6 +25771,9 @@ class fractionType7(ReferenceType):
     the whole
     material in the range 0.0 < n < 1.0"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('n', 'xs:double', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ReferenceType
     def __init__(self, ref=None, n=None, gds_collector_=None, **kwargs_):
@@ -25066,6 +25891,9 @@ class fractionType7(ReferenceType):
 class propertyType8(ReferenceType):
     """General optical surface property (const or vector)"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ReferenceType
     def __init__(self, ref=None, name=None, gds_collector_=None, **kwargs_):
@@ -25182,6 +26010,9 @@ class propertyType8(ReferenceType):
 class propertyType9(ReferenceType):
     """General optical surface property (const or vector)"""
     __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
+    ]
     subclass = None
     superclass = ReferenceType
     def __init__(self, ref=None, name=None, gds_collector_=None, **kwargs_):

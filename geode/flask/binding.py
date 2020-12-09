@@ -30,6 +30,15 @@ class GeodeForFlask(object):
         L.debug("Geometry library subtree imported.")
         return l
 
+    def init_setups(self):
+        L = logging.getLogger(__name__)
+        L.debug('Creating '
+                ' from "%s"'%current_app.config['GDML_LIBRARY'])
+        l = Library()
+        l.import_fs_subtree(current_app.config['GDML_LIBRARY'])
+        L.debug("Geometry library subtree imported.")
+        return db
+
     def init_app(self, app):
         app.config.setdefault('GDML_LIBRARY', '../geomlib')
         app.extensions['geode_gdml'] = self
@@ -41,4 +50,12 @@ class GeodeForFlask(object):
             if not hasattr(ctx, 'geode_gdml'):
                 ctx.geode_gdml = self.read_lib()
             return ctx.geode_gdml
+
+    @property
+    def setups(self):
+        ctx = _app_ctx_stack.top
+        if ctx is not None:
+            if not hasattr(ctx, 'geode_setups'):
+                ctx.geode_setups = self.init_setups()
+            return ctx.geode_setups
 

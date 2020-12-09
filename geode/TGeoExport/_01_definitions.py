@@ -94,10 +94,15 @@ def read_definitions( gdml, I,
 
     L = logging.getLogger(__name__)
 
+    # Note for PyROOT 6.22 update: AddressOf() is now called AddressOf()
+    AOF = getattr(ROOT, 'addressof', None)
+    if AOF is None:
+        AOF = ROOT.AddressOf
+
     defStruct = ROOT.Definition_t()
     rTree = ROOT.TTree('Values', 'Named constants & variables.')
     rTree.Branch( 'value', defStruct, 'value/D' )
-    rTree.Branch( 'name',  ROOT.AddressOf(defStruct, 'name'), 'name[128]/C' )
+    rTree.Branch( 'name',  AOF(defStruct, 'name'), 'name[128]/C' )
 
     #
     # Constants:
@@ -121,9 +126,9 @@ def read_definitions( gdml, I,
     rTree = ROOT.TTree('Quantities', 'Named scalar quantities.')
     rTree.Branch( 'value',          qStruct, 'value/D' )
     rTree.Branch( 'absoluteValue',  qStruct, 'absoluteValue/D' )
-    rTree.Branch( 'name',   ROOT.AddressOf(qStruct, 'name'),    'name[128]/C' )
-    rTree.Branch( 'unit',   ROOT.AddressOf(qStruct, 'unit'),    'unit[32]/C'  )
-    rTree.Branch( 'qType',  ROOT.AddressOf(qStruct, 'qType'),   'qType[64]/C' )
+    rTree.Branch( 'name',   AOF(qStruct, 'name'),    'name[128]/C' )
+    rTree.Branch( 'unit',   AOF(qStruct, 'unit'),    'unit[32]/C'  )
+    rTree.Branch( 'qType',  AOF(qStruct, 'qType'),   'qType[64]/C' )
 
     #
     # Quantities:
@@ -154,9 +159,9 @@ def read_definitions( gdml, I,
     rTree = ROOT.TTree('Positions', 'Named 3-component quantities: positions.' )
     rTree.Branch( 'components',      qStruct, 'components[3]/D' )
     rTree.Branch( 'computedComponents', qStruct, 'computedComponents[3]/D' )
-    rTree.Branch( 'name',  ROOT.AddressOf(qStruct, 'name'), 'name/C' )
-    rTree.Branch( 'unit',  ROOT.AddressOf(qStruct, 'unit'), 'unit/C' )
-    rTree.Branch( 'qType',  ROOT.AddressOf(qStruct, 'qType'), 'qType/C' )
+    rTree.Branch( 'name',  AOF(qStruct, 'name'), 'name/C' )
+    rTree.Branch( 'unit',  AOF(qStruct, 'unit'), 'unit/C' )
+    rTree.Branch( 'qType', AOF(qStruct, 'qType'), 'qType/C' )
 
     #
     # Positions:
@@ -185,9 +190,9 @@ def read_definitions( gdml, I,
     rTree = ROOT.TTree('Rotatitions', 'Named 3-component quantities: rotations.')
     rTree.Branch( 'components',      qStruct, 'components[3]/D' )
     rTree.Branch( 'computedComponents', qStruct, 'computedComponents[3]/D' )
-    rTree.Branch( 'name',  ROOT.AddressOf(qStruct, 'name'), 'name/C' )
-    rTree.Branch( 'unit',  ROOT.AddressOf(qStruct, 'unit'), 'unit/C' )
-    rTree.Branch( 'qType',  ROOT.AddressOf(qStruct, 'qType'), 'qType/C' )
+    rTree.Branch( 'name',  AOF(qStruct, 'name'), 'name/C' )
+    rTree.Branch( 'unit',  AOF(qStruct, 'unit'), 'unit/C' )
+    rTree.Branch( 'qType', AOF(qStruct, 'qType'), 'qType/C' )
 
     #
     # Rotations:
@@ -214,7 +219,7 @@ def read_definitions( gdml, I,
 
     rTree = ROOT.TTree('Scales', 'Named 3-component quantities: scales.')
     rTree.Branch( 'components',      qStruct, 'components[3]/D' )
-    rTree.Branch( 'name',  ROOT.AddressOf(qStruct, 'name'), 'name/C' )
+    rTree.Branch( 'name',  AOF(qStruct, 'name'), 'name/C' )
 
     #
     # Scales: scale_from_v3

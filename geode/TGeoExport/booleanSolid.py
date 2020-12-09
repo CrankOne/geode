@@ -22,7 +22,6 @@
 
 from __future__ import print_function
 
-from dpath import dpath
 import ROOT
 
 # TODO: multiunion!
@@ -48,7 +47,10 @@ def get_resolver( qType ):
         vec = None
         ref = getattr( n, 'get_' + qType + 'ref' )()
         if not ref is None:
-            vec = dpath.util.get( defines, 'defines/' + qType + 's' )
+            #vec = dpath.util.get( defines, 'defines/' + qType + 's' )
+            vec = defines
+            for pTok in ('defines/' + qType + 's').split('/'):
+                vec = c[pTok]
         else:
             vec = ROOT.Vector3_t()
             qtty = getattr( n, 'get_' + qType )()

@@ -7,19 +7,24 @@ import ROOT
 
 #
 # Load the common C-definitions via CINT:
-#ROOT.gROOT.SetMacroPath( ROOT.gROOT.GetMacroPath() \
-#                    + os.path.dirname(__file__) \
-#                    + '/../../common/' )
-#ROOT.gROOT.LoadMacro("structs.C")
+ROOT.gROOT.SetMacroPath( ROOT.gROOT.GetMacroPath() \
+                    + os.path.dirname(__file__) \
+                    + '/../..' )
+ROOT.gROOT.LoadMacro("structs.C")
 # ^^^NOTE: ROOT may silently fail to load the definitions, causing fatal issues
 # rendering GDML -> TGeo.
+# TODO: consider instead:
+#ROOT.gInterpreter.Declare("""
+#class A {};
+#void foo(A* a) {}
+#""")
 
 #
 # Initialize damn manager:
 #ROOT.gGeoManager.SetVerboseLevel( 0 if quiet else 1 )
 if not ROOT.gGeoManager:
     ROOT.gROOT.ProcessLine('GeoManager = new TGeoManager("geo", '
-                           '"GDML geometry.")')
+                           '"Imported GDML geometry.")')
 
 # Initialize default materials database:
 ROOT.gGeoManager.BuildDefaultMaterials()

@@ -7,7 +7,7 @@ corresponding ROOT structures.
 Shouldn't be used as a separate module. Import extGDML.root.bindings instead.
 """
 
-from extGDML.root.CSG import gCSGConstructorsDict
+from .CSG import gCSGConstructorsDict
 import logging
 import ROOT
 
@@ -19,7 +19,7 @@ def read_solids( gdml, I,
     primitives, boolean operations and replicas). Created instances are then
     indexed by name in `defs' dictionary at 'solids/'.
     """
-    from extGDML.root.loop import treat_loop_element
+    from .loop import treat_loop_element
     L = logging.getLogger(__name__)
     for solid in gdml.get_solids().Solid:
         className = solid.__class__.__name__

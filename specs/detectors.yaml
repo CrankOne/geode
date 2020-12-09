@@ -4,11 +4,11 @@
 
 # Define the Micromega boilerplate
 x-MM: &MM
-    geometry: MuMega/MM-simple.gdml # common GDML entity used by builder for MuMegas
+    geometry: MuMega/MM-simple # common GDML entity used by builder for MuMegas
     posUnit: mm
     rotUnit: deg
 x-GM: &GM
-    geometry: GEM/GM-simple.gdml
+    geometry: GEM/GM-simple
     posUnit: mm
     rotUnit: deg
 

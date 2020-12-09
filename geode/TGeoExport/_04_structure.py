@@ -8,8 +8,8 @@ Shouldn't be used as a separate module. Import extGDML.root.bindings instead.
 """
 
 import ROOT
-from replication import replicate
-from extGDML.root.refResolve import get_or_resolve_position, \
+from .replication import replicate
+from .refResolve import get_or_resolve_position, \
                                     get_or_resolve_rotation
 import logging
 from os.path import splitext, basename
@@ -87,7 +87,7 @@ def read_structure( gdml, I,
     solids with assigned materials and placement parameters
     (position/rotation).
     """
-    from extGDML.root.loop import treat_loop_element
+    from .loop import treat_loop_element
     # structure includes:
     #   1. <volume/>
     #   2. <assembly/>  (TODO)

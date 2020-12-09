@@ -21,9 +21,9 @@
 # SOFTWARE.
 
 from __future__ import print_function
-from extGDML.constructorsMapping import auto_CSG_ctr
-from extGDML.root.booleanSolid import TGeo_boolean_ctr
-from extGDML.root.polyhedra import pgon_ctr
+from geode.ctrMapping import auto_CSG_ctr
+from .booleanSolid import TGeo_boolean_ctr
+from .polyhedra import pgon_ctr
 from math import pi as Pi
 
 """

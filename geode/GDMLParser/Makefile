@@ -12,7 +12,7 @@ v$(SCHEMA_VERSION)/__init__.py: v$(SCHEMA_VERSION)/GDML_$(SCHEMA_VERSION)/schema
 	cd v$(SCHEMA_VERSION) ; \
 	$(GENERATE_DS_EXEC) -m -f -o classes.py \
 		--export='write literal etree' --root-element gdml \
-		-s subclasses.py GDML_$(SCHEMA_VERSION)/schema/gdml.xsd
+		-s subclasses.py -u ../gdml_methods.py GDML_$(SCHEMA_VERSION)/schema/gdml.xsd
 
 v$(SCHEMA_VERSION)/GDML_$(SCHEMA_VERSION)/schema/gdml.xsd: v$(SCHEMA_VERSION)/GDML_$(SCHEMA_VERSION).tar.gz
 	cd v$(SCHEMA_VERSION) ; \

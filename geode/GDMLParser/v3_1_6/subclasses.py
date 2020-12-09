@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Generated Wed Nov 18 09:47:08 2020 by generateDS.py version 2.37.1.
+# Generated Mon Dec  7 15:31:42 2020 by generateDS.py version 2.37.6.
 # Python 3.7.8 (default, Aug 15 2020, 19:20:38)  [GCC 9.3.0]
 #
 # Command line options:
@@ -11,12 +11,13 @@
 #   ('--export', 'write literal etree')
 #   ('--root-element', 'gdml')
 #   ('-s', 'subclasses.py')
+#   ('-u', '../gdml_methods.py')
 #
 # Command line arguments:
 #   GDML_3_1_6/schema/gdml.xsd
 #
 # Command line:
-#   /var/src/.venv/bin/generateDS.py -m -f -o "classes.py" --export="write literal etree" --root-element="gdml" -s "subclasses.py" GDML_3_1_6/schema/gdml.xsd
+#   /var/src/venv-sys-site/bin/generateDS.py -m -f -o "classes.py" --export="write literal etree" --root-element="gdml" -s "subclasses.py" -u "../gdml_methods.py" GDML_3_1_6/schema/gdml.xsd
 #
 # Current working directory (os.getcwd()):
 #   v3_1_6

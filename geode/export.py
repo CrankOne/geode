@@ -1,3 +1,6 @@
+import logging
+import importlib
+
 import geode.GDMLParser.v3_1_6.classes as GDML  # TODO: ARG
 
 def build_root_GDML( assemblyItems, lib, worldVol=None ):
@@ -24,11 +27,13 @@ def build_root_GDML( assemblyItems, lib, worldVol=None ):
         * `lunit' defining length units for `x', `y', `z'
     If `worldVol is not given, the cube 1x1x1m will be used.
     """
+    L = logging.getLogger(__name__)
     if worldVol is None:
         worldVol = { 'x': 1, 'y': 1, 'z': 1, 'lunit': 'm' }
     # Build the setup object from YAML definitions
     solids = GDML.solids()
     defines = GDML.defineType()
+    materials = GDML.materials()
     # - create world volume (TODO: take dimensions from a config)
     solidWorld = GDML.box( name=worldVol.get("solidName", "solidWorld")
                          , x=worldVol['x']
@@ -81,7 +86,7 @@ def build_root_GDML( assemblyItems, lib, worldVol=None ):
     gdmlRoot = GDML.gdml()
 
     gdmlRoot.set_define(defines)
-    #gdmlRoot.set_materials(materials)
+    gdmlRoot.set_materials(materials)
     gdmlRoot.set_solids(solids)
     gdmlRoot.set_structure(structure)
     # - create the default setup
@@ -91,3 +96,31 @@ def build_root_GDML( assemblyItems, lib, worldVol=None ):
                           )
     gdmlRoot.add_setup(setup)
     return gdmlRoot
+
+def export( gdml, index, exportFormat='GDML' ):
+    """
+    Main export function.
+    Keyword arguments may contain suppressing
+    """
+    L = logging.getLogger(__name__)
+    entitiesList = [
+            'definitions',  'materials',
+            'solids',       'structure',
+            'setup' ]
+    sectionsExporters = []
+    # Import conversion modules
+    for i, entitiesName in enumerate(entitiesList):
+        moduleStr = 'geode.{format_}Export._{sectNum}_{sectName}'.format( format_=exportFormat
+                , sectNum='%02d'%(1+i)
+                , sectName=entitiesName
+                )
+        m = importlib.import_module(moduleStr)
+        f = getattr( m, 'read_' + entitiesName )
+        assert(f)
+        sectionsExporters.append( (i, f, moduleStr) )
+    for expn, export_f, moduleStr in sectionsExporters:
+        if export_f:
+            L.debug( 'Invoking %s function of "%s"'%(str(export_f), moduleStr) )
+            export_f( gdml, index )
+        else:
+            L.info('Export of "%s" omitted')

@@ -21,6 +21,7 @@ from geode.library import Library as GDMLLibrary
 from geode.export import build_root_GDML
 from geode.export import export as geode_export
 from geode.defs import DefinitionsIndex as GDMLDefinitions
+import geode.nist_mats_export
 
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True  # suppress default ROOT option parser
@@ -59,8 +60,13 @@ def main(args):
         gdmlRoot.export( args.output, 0, name_='gdml' )
     else:
         # Instantiate definitions index
-        defs = GDMLDefinitions(  )
-        # Export 
+        defs = GDMLDefinitions()
+        # If Geant4 NIST materials enabled, lookup for the `G4_*' material
+        # references within a parsed data
+        if not args.disable_G4NIST_materials:
+            mats = geode.nist_mats_export.find_refs(gdmlRoot, lib)
+            geode.nist_mats_export.inject(gdmlRoot, mats)
+        # Export
         geode_export( gdmlRoot
                     , defs
                     , exportFormat=oFormat )
@@ -92,5 +98,9 @@ if "__main__" == __name__:
             ' will be assumed by output file\'s suffix, if possible.'
             , choices=['gdml', 'TGeo']  # NOTE: must correspond to one of the *Export in geode/ dir
             )
+    p.add_argument( '--disable-G4NIST-materials', help='If provided, none'
+            ' of the NIST materials will be converted to explicit definitions'
+            ' within the output.'
+            , action='store_true' )
     args = p.parse_args()
     main(args)

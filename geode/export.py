@@ -3,7 +3,11 @@ import importlib
 
 import geode.GDMLParser.v3_1_6.classes as GDML  # TODO: ARG
 
-def build_root_GDML( assemblyItems, lib, worldVol=None ):
+def build_root_GDML( assemblyItems
+                   , lib
+                   , worldVol=None
+                   , file_resolver=None
+                   ):
     """
     Produces a root GDML document node defining setup built from multiple
     assembly files. It is somewhat common and simplistic case for setup in
@@ -26,10 +30,16 @@ def build_root_GDML( assemblyItems, lib, worldVol=None ):
         * `x, `y', `z' defining width, height and depth of the world box
         * `lunit' defining length units for `x', `y', `z'
     If `worldVol is not given, the cube 1x1x1m will be used.
+
+    The `file_resolver' is `None' or a callable that accepts (lib entry,
+    item key, item parameters) and returns an URI string that must be a name
+    of the `<file/>' GDML tag.
     """
     L = logging.getLogger(__name__)
     if worldVol is None:
         worldVol = { 'x': 1, 'y': 1, 'z': 1, 'lunit': 'm' }
+    if not file_resolver:
+        file_resolver = lambda x, entryName, cfgParameters: x['file']
     # Build the setup object from YAML definitions
     solids = GDML.solids()
     defines = GDML.defineType()
@@ -74,7 +84,8 @@ def build_root_GDML( assemblyItems, lib, worldVol=None ):
         defines.add_position( position )
         defines.add_rotation( rotation )
         # put the assembly at certain position
-        placementDict = { 'file' : GDML.FileReferenceType( name=lib.items[geoPath]['file'] )
+        endpoint = file_resolver( lib.items[geoPath], k, cfgPs )
+        placementDict = { 'file' : GDML.FileReferenceType( name=endpoint )
                     #, 'name' : ...
                     , 'positionref' : GDML.ReferenceType(ref=position.get_name())
                     , 'rotationref' : GDML.ReferenceType(ref=rotation.get_name())
@@ -100,7 +111,11 @@ def build_root_GDML( assemblyItems, lib, worldVol=None ):
 def export( gdml, index, exportFormat='GDML' ):
     """
     Main export function.
-    Keyword arguments may contain suppressing
+    This procedure will sequentially import submodules related to certain
+    output format, expecting them to exist within a Geode package:
+        geode.{format}Export._{num}_{name}
+    and look for the `read_{name}' function within that will be invoked, in
+    order, with the parsed GDML data and index.
     """
     L = logging.getLogger(__name__)
     entitiesList = [

@@ -40,7 +40,7 @@ class GeodeForFlask(object):
         return db
 
     def init_app(self, app):
-        app.config.setdefault('GDML_LIBRARY', '../geomlib')
+        app.config.setdefault('GDML_LIBRARY', 'specs/geomlib')
         app.extensions['geode_gdml'] = self
 
     @property

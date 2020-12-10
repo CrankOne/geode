@@ -21,7 +21,7 @@ def make_physvol_from_solids( I, subVol, volume, *args, **kwargs ):
     #   attr: name
     #   attr: copynumber
     if subVol.get_file():
-        from extGDML.gdmlFileExport import export_gdml_file
+        from geode.gdmlFileExport import export_gdml_file
         submoduleFilename = subVol.get_file().get_name()
         sumoduleName = splitext(basename(submoduleFilename))[0]
         # No need:
@@ -32,7 +32,6 @@ def make_physvol_from_solids( I, subVol, volume, *args, **kwargs ):
                 'verboseParse'   : kwargs.get('verboseParse', True),
                 'verboseConvert' : kwargs.get('verboseConvert', True),
                 'index' : subIdx, 'indexClass' : None,
-                'NISTMaterialsGDML' : None,
                 'finalizeGeometry' : False,
                 'exportFormat' : 'ROOT',
                 'setupName' : 'Default',

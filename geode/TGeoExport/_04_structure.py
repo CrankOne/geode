@@ -9,11 +9,9 @@ Shouldn't be used as a separate module. Import extGDML.root.bindings instead.
 
 import ROOT
 from .replication import replicate
-from .refResolve import get_or_resolve_position, \
-                                    get_or_resolve_rotation
+from .refResolve import get_or_resolve_position, get_or_resolve_rotation  # get_or_resolve_scale
 import logging
 from os.path import splitext, basename
-#                                    get_or_resolve_scale
 
 def make_physvol_from_solids( I, subVol, volume, *args, **kwargs ):
     subVolInstance = None

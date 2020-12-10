@@ -23,7 +23,8 @@ Executables:
 
     - render.py [dir] [configs] -- renders geometry library into directory
     - serve.py [dir] [configs] -- runs standalone RESTful server
-    - dump-nist-mats.py -- writes a dump of NIST mats (?)
+    - dump-G4NIST-mats.py -- writes a dump of NIST mats (? to be unioned with
+    render.py?)
 
 Configuration sources:
     - common -- defines common parameters for geometry hierarchy; parameters

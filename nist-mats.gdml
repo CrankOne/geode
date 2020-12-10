@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE gdml>
+
+<!-- This is an auto-generated GDML file indexing NIST materials database
+     as they where found in Geant4 of version
+     $Name: geant4-10-06-patch-02 $
+  -->
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    <define/>
+    <materials>
+        <isotope name="Ag107" N="107" Z="4.700000e+01">
+            <atom value="106.90505624905603" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ag109" N="109" Z="4.700000e+01">
+            <atom value="108.90505730137457" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Al27" N="27" Z="1.300000e+01">
+            <atom value="26.98151419656616" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ar36" N="36" Z="1.800000e+01">
+            <atom value="35.9675189246333" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ar38" N="38" Z="1.800000e+01">
+            <atom value="37.962719974426264" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ar40" N="40" Z="1.800000e+01">
+            <atom value="39.96242102658694" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Au197" N="197" Z="7.900000e+01">
+            <atom value="196.96710363601161" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="C12" N="12" Z="6.000000e+00">
+            <atom value="12.00000631391116" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="C13" N="13" Z="6.000000e+00">
+            <atom value="13.003406841859363" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Cs133" N="133" Z="5.500000e+01">
+            <atom value="132.90506992919688" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Cu63" N="63" Z="2.900000e+01">
+            <atom value="62.92963311099197" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Cu65" N="65" Z="2.900000e+01">
+            <atom value="64.92783416236342" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Fe54" N="54" Z="2.600000e+01">
+            <atom value="53.93962838082018" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Fe56" N="56" Z="2.600000e+01">
+            <atom value="55.934929430665775" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Fe57" N="57" Z="2.600000e+01">
+            <atom value="56.93542995708812" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Fe58" N="58" Z="2.600000e+01">
+            <atom value="57.93333048214245" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ge70" N="70" Z="3.200000e+01">
+            <atom value="69.92433679131817" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ge72" N="72" Z="3.200000e+01">
+            <atom value="71.92213784247915" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ge73" N="73" Z="3.200000e+01">
+            <atom value="72.92353836937504" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ge74" N="74" Z="3.200000e+01">
+            <atom value="73.92123889432412" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Ge76" N="76" Z="3.200000e+01">
+            <atom value="75.9214399467479" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="H1" N="1" Z="1.000000e+00">
+            <atom value="1.0078255610901985" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="H2" N="2" Z="1.000000e+00">
+            <atom value="2.0141030594045977" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="I127" N="127" Z="5.300000e+01">
+            <atom value="126.90406677171514" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="N14" N="14" Z="7.000000e+00">
+            <atom value="14.003107367860778" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="N15" N="15" Z="7.000000e+00">
+            <atom value="15.000107892441562" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Na23" N="23" Z="1.100000e+01">
+            <atom value="22.989812096296227" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="O16" N="16" Z="8.000000e+00">
+            <atom value="15.994908415864796" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="O17" N="17" Z="8.000000e+00">
+            <atom value="16.999108944233928" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="O18" N="18" Z="8.000000e+00">
+            <atom value="17.99920947044581" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Pb204" N="204" Z="8.200000e+01">
+            <atom value="203.97310732228343" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Pb206" N="206" Z="8.200000e+01">
+            <atom value="205.97410837512805" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Pb207" N="207" Z="8.200000e+01">
+            <atom value="206.9761089023397" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Pb208" N="208" Z="8.200000e+01">
+            <atom value="207.9771094290251" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Si28" N="28" Z="1.400000e+01">
+            <atom value="27.976914720305093" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Si29" N="29" Z="1.400000e+01">
+            <atom value="28.97651524625389" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="Si30" N="30" Z="1.400000e+01">
+            <atom value="29.973815770992527" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="W180" N="180" Z="7.400000e+01">
+            <atom value="179.94709468078096" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="W182" N="182" Z="7.400000e+01">
+            <atom value="181.94809573362562" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="W183" N="183" Z="7.400000e+01">
+            <atom value="182.95009626083717" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="W184" N="184" Z="7.400000e+01">
+            <atom value="183.95109678752263" unit="g/mole" type="A"/>
+        </isotope>
+        <isotope name="W186" N="186" Z="7.400000e+01">
+            <atom value="185.95409784141964" unit="g/mole" type="A"/>
+        </isotope>
+        <element name="Ag" formula="Ag" N="107" Z="4.700000e+01">
+            <fraction ref="Ag107" n="5.183900e-01"/>
+            <fraction ref="Ag109" n="4.816100e-01"/>
+        </element>
+        <element name="Al" formula="Al" N="26" Z="1.300000e+01">
+            <fraction ref="Al27" n="1.000000e+00"/>
+        </element>
+        <element name="Ar" formula="Ar" N="39" Z="1.800000e+01">
+            <fraction ref="Ar36" n="3.365000e-03"/>
+            <fraction ref="Ar38" n="6.320000e-04"/>
+            <fraction ref="Ar40" n="9.960030e-01"/>
+        </element>
+        <element name="Au" formula="Au" N="196" Z="7.900000e+01">
+            <fraction ref="Au197" n="1.000000e+00"/>
+        </element>
+        <element name="C" formula="C" N="12" Z="6.000000e+00">
+            <fraction ref="C12" n="9.893000e-01"/>
+            <fraction ref="C13" n="1.070000e-02"/>
+        </element>
+        <element name="Cs" formula="Cs" N="132" Z="5.500000e+01">
+            <fraction ref="Cs133" n="1.000000e+00"/>
+        </element>
+        <element name="Cu" formula="Cu" N="63" Z="2.900000e+01">
+            <fraction ref="Cu63" n="6.917000e-01"/>
+            <fraction ref="Cu65" n="3.083000e-01"/>
+        </element>
+        <element name="Fe" formula="Fe" N="55" Z="2.600000e+01">
+            <fraction ref="Fe54" n="5.845000e-02"/>
+            <fraction ref="Fe56" n="9.175400e-01"/>
+            <fraction ref="Fe57" n="2.119000e-02"/>
+            <fraction ref="Fe58" n="2.820000e-03"/>
+        </element>
+        <element name="Ge" formula="Ge" N="72" Z="3.200000e+01">
+            <fraction ref="Ge70" n="2.084000e-01"/>
+            <fraction ref="Ge72" n="2.754000e-01"/>
+            <fraction ref="Ge73" n="7.730000e-02"/>
+            <fraction ref="Ge74" n="3.628000e-01"/>
+            <fraction ref="Ge76" n="7.610000e-02"/>
+        </element>
+        <element name="H" formula="H" N="1" Z="1.000000e+00">
+            <fraction ref="H1" n="9.998850e-01"/>
+            <fraction ref="H2" n="1.150000e-04"/>
+        </element>
+        <element name="I" formula="I" N="126" Z="5.300000e+01">
+            <fraction ref="I127" n="1.000000e+00"/>
+        </element>
+        <element name="N" formula="N" N="14" Z="7.000000e+00">
+            <fraction ref="N14" n="9.963200e-01"/>
+            <fraction ref="N15" n="3.680000e-03"/>
+        </element>
+        <element name="Na" formula="Na" N="22" Z="1.100000e+01">
+            <fraction ref="Na23" n="1.000000e+00"/>
+        </element>
+        <element name="O" formula="O" N="15" Z="8.000000e+00">
+            <fraction ref="O16" n="9.975700e-01"/>
+            <fraction ref="O17" n="3.800000e-04"/>
+            <fraction ref="O18" n="2.050000e-03"/>
+        </element>
+        <element name="Pb" formula="Pb" N="207" Z="8.200000e+01">
+            <fraction ref="Pb204" n="1.400000e-02"/>
+            <fraction ref="Pb206" n="2.410000e-01"/>
+            <fraction ref="Pb207" n="2.210000e-01"/>
+            <fraction ref="Pb208" n="5.240000e-01"/>
+        </element>
+        <element name="Si" formula="Si" N="28" Z="1.400000e+01">
+            <fraction ref="Si28" n="9.222961e-01"/>
+            <fraction ref="Si29" n="4.683195e-02"/>
+            <fraction ref="Si30" n="3.087197e-02"/>
+        </element>
+        <element name="W" formula="W" N="183" Z="7.400000e+01">
+            <fraction ref="W180" n="1.200000e-03"/>
+            <fraction ref="W182" n="2.650000e-01"/>
+            <fraction ref="W183" n="1.431000e-01"/>
+            <fraction ref="W184" n="3.064000e-01"/>
+            <fraction ref="W186" n="2.843000e-01"/>
+        </element>
+        <material name="G4_AIR" formula="" state="gas">
+            <RL value="30392.0705475692" unit="cm" type="X0"/>
+            <AL value="71009.49564069547" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="0.0012047906339114189" unit="g/cm3" type="density"/>
+            <fraction ref="C" n="1.240001e-04"/>
+            <fraction ref="N" n="7.552678e-01"/>
+            <fraction ref="O" n="2.317812e-01"/>
+            <fraction ref="Ar" n="1.282701e-02"/>
+        </material>
+        <material name="G4_Ag" formula="" state="solid">
+            <RL value="0.8542919244680679" unit="cm" type="X0"/>
+            <AL value="15.867551496152625" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="10.500005524672265" unit="g/cm3" type="density"/>
+            <fraction ref="Ag" n="1.000000e+00"/>
+        </material>
+        <material name="G4_Al" formula="" state="solid">
+            <RL value="8.896317758218114" unit="cm" type="X0"/>
+            <AL value="38.894410203388006" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="2.6990014201038512" unit="g/cm3" type="density"/>
+            <fraction ref="Al" n="1.000000e+00"/>
+        </material>
+        <material name="G4_Ar" formula="" state="gas">
+            <RL value="11762.143864107344" unit="cm" type="X0"/>
+            <AL value="71988.80781320222" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="0.0016620108744819571" unit="g/cm3" type="density"/>
+            <fraction ref="Ar" n="1.000000e+00"/>
+        </material>
+        <material name="G4_Au" formula="" state="solid">
+            <RL value="0.3344364470565493" unit="cm" type="X0"/>
+            <AL value="10.540440137252926" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="19.320010165396965" unit="g/cm3" type="density"/>
+            <fraction ref="Au" n="1.000000e+00"/>
+        </material>
+        <material name="G4_CESIUM_IODIDE" formula="" state="solid">
+            <RL value="1.8602880108400484" unit="cm" type="X0"/>
+            <AL value="39.305981919004466" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="4.510002372978277" unit="g/cm3" type="density"/>
+            <fraction ref="Cs" n="5.115489e-01"/>
+            <fraction ref="I" n="4.884511e-01"/>
+        </material>
+        <material name="G4_Cu" formula="" state="solid">
+            <RL value="1.4355780471721835" unit="cm" type="X0"/>
+            <AL value="15.58793666838802" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="8.960004714386999" unit="g/cm3" type="density"/>
+            <fraction ref="Cu" n="1.000000e+00"/>
+        </material>
+        <material name="G4_Fe" formula="" state="solid">
+            <RL value="1.7574934937393139" unit="cm" type="X0"/>
+            <AL value="16.990298928773882" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="7.8740041429780385" unit="g/cm3" type="density"/>
+            <fraction ref="Fe" n="1.000000e+00"/>
+        </material>
+        <material name="G4_Galactic" formula="" state="gas">
+            <RL value="6.304351007438825e+26" unit="cm" type="X0"/>
+            <AL value="3.500000003326212e+26" unit="cm" type="lambda"/>
+            <T value="2.73" unit="K" type="temperature"/>
+            <P value="3.0000015784777894e-18" unit="pascal" type="pressure"/>
+            <D value="1.0000005261592631e-25" unit="g/cm3" type="density"/>
+            <fraction ref="H" n="1.000000e+00"/>
+        </material>
+        <material name="G4_Ge" formula="" state="solid">
+            <RL value="2.301299918263902" unit="cm" type="X0"/>
+            <AL value="27.43148258089075" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="5.323002800745758" unit="g/cm3" type="density"/>
+            <fraction ref="Ge" n="1.000000e+00"/>
+        </material>
+        <material name="G4_KAPTON" formula="" state="solid">
+            <RL value="28.57477587401015" unit="cm" type="X0"/>
+            <AL value="55.81690478504828" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="1.4200007471461535" unit="g/cm3" type="density"/>
+            <fraction ref="C" n="6.911278e-01"/>
+            <fraction ref="H" n="2.636338e-02"/>
+            <fraction ref="N" n="7.327132e-02"/>
+            <fraction ref="O" n="2.092375e-01"/>
+        </material>
+        <material name="G4_MYLAR" formula="" state="solid">
+            <RL value="28.53640479267451" unit="cm" type="X0"/>
+            <AL value="55.923146925470704" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="1.4000007366229683" unit="g/cm3" type="density"/>
+            <fraction ref="C" n="6.250108e-01"/>
+            <fraction ref="H" n="4.196072e-02"/>
+            <fraction ref="O" n="3.330285e-01"/>
+        </material>
+        <material name="G4_PLASTIC_SC_VINYLTOLUENE" formula="" state="solid">
+            <RL value="42.544200344994465" unit="cm" type="X0"/>
+            <AL value="69.96938187166677" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="1.0320005429963597" unit="g/cm3" type="density"/>
+            <fraction ref="C" n="9.147085e-01"/>
+            <fraction ref="H" n="8.529147e-02"/>
+        </material>
+        <material name="G4_PLEXIGLASS" formula="" state="solid">
+            <RL value="34.074881212168165" unit="cm" type="X0"/>
+            <AL value="62.67020054218237" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="1.1900006261295233" unit="g/cm3" type="density"/>
+            <fraction ref="C" n="5.998411e-01"/>
+            <fraction ref="H" n="8.054184e-02"/>
+            <fraction ref="O" n="3.196171e-01"/>
+        </material>
+        <material name="G4_Pb" formula="" state="solid">
+            <RL value="0.5612532716421289" unit="cm" type="X0"/>
+            <AL value="18.247945584195644" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="11.350005971907638" unit="g/cm3" type="density"/>
+            <fraction ref="Pb" n="1.000000e+00"/>
+        </material>
+        <material name="G4_SODIUM_IODIDE" formula="" state="solid">
+            <RL value="2.588221318607796" unit="cm" type="X0"/>
+            <AL value="42.91369013461523" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="3.6670019294260183" unit="g/cm3" type="density"/>
+            <fraction ref="Na" n="1.533739e-01"/>
+            <fraction ref="I" n="8.466261e-01"/>
+        </material>
+        <material name="G4_Si" formula="" state="solid">
+            <RL value="9.366070445324484" unit="cm" type="X0"/>
+            <AL value="45.66030375019772" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="2.3300012259510834" unit="g/cm3" type="density"/>
+            <fraction ref="Si" n="1.000000e+00"/>
+        </material>
+        <material name="G4_THYMINE" formula="" state="solid">
+            <RL value="32.2988669714346" unit="cm" type="X0"/>
+            <AL value="63.413027831723426" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="1.2300006471758937" unit="g/cm3" type="density"/>
+            <fraction ref="H" n="4.795393e-02"/>
+            <fraction ref="C" n="4.761870e-01"/>
+            <fraction ref="N" n="2.221293e-01"/>
+            <fraction ref="O" n="2.537297e-01"/>
+        </material>
+        <material name="G4_W" formula="" state="solid">
+            <RL value="0.35041802328627775" unit="cm" type="X0"/>
+            <AL value="10.311582971743913" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="19.30001015487378" unit="g/cm3" type="density"/>
+            <fraction ref="W" n="1.000000e+00"/>
+        </material>
+        <material name="G4_WATER" formula="H_2O" state="solid">
+            <RL value="36.082978054552555" unit="cm" type="X0"/>
+            <AL value="75.37478343600647" unit="cm" type="lambda"/>
+            <T value="293.15" unit="K" type="temperature"/>
+            <P value="101325.05331308734" unit="pascal" type="pressure"/>
+            <D value="1.0000005261592633" unit="g/cm3" type="density"/>
+            <fraction ref="H" n="1.118985e-01"/>
+            <fraction ref="O" n="8.881015e-01"/>
+        </material>
+    </materials>
+
+
+    <solids>
+        <box name="solidBox" x="1" y="1" z="1" lunit="m"/>
+    </solids>
+
+    <structure>
+        <volume name="NISTMatsWorld">
+            <materialref ref="G4_AIR"/>
+            <solidref ref="solidBox"></solidref>
+        </volume>
+    </structure>
+
+    <setup name="Default" version="1">
+        <world ref="NISTMatsWorld"/>
+    </setup>
+</gdml>

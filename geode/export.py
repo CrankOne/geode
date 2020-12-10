@@ -1,5 +1,6 @@
 import logging
 import importlib
+import io
 
 import geode.GDMLParser.v3_1_6.classes as GDML  # TODO: ARG
 
@@ -31,15 +32,15 @@ def build_root_GDML( assemblyItems
         * `lunit' defining length units for `x', `y', `z'
     If `worldVol is not given, the cube 1x1x1m will be used.
 
-    The `file_resolver' is `None' or a callable that accepts (lib entry,
-    item key, item parameters) and returns an URI string that must be a name
-    of the `<file/>' GDML tag.
+    The `file_resolver' is `None' or a callable that accepts (lib entry, lib key,
+    item key wrt client config, item client's config parameters) and returns an
+    URI string that must be a name of the `<file/>' GDML tag.
     """
     L = logging.getLogger(__name__)
     if worldVol is None:
         worldVol = { 'x': 1, 'y': 1, 'z': 1, 'lunit': 'm' }
     if not file_resolver:
-        file_resolver = lambda x, entryName, cfgParameters: x['file']
+        file_resolver = lambda x, geoPath, entryName, cfgParameters: x['file']
     # Build the setup object from YAML definitions
     solids = GDML.solids()
     defines = GDML.defineType()
@@ -84,7 +85,7 @@ def build_root_GDML( assemblyItems
         defines.add_position( position )
         defines.add_rotation( rotation )
         # put the assembly at certain position
-        endpoint = file_resolver( lib.items[geoPath], k, cfgPs )
+        endpoint = file_resolver( lib.items[geoPath], geoPath, k, cfgPs )
         placementDict = { 'file' : GDML.FileReferenceType( name=endpoint )
                     #, 'name' : ...
                     , 'positionref' : GDML.ReferenceType(ref=position.get_name())
@@ -139,3 +140,15 @@ def export( gdml, index, exportFormat='GDML' ):
             export_f( gdml, index )
         else:
             L.info('Export of "%s" omitted')
+
+
+def gdml2str(gdml, header=True):
+    """
+    (Should be a) standard way to produce standalone GDML document from
+    GenerateDS' structures.
+    """
+    strOut = io.StringIO()
+    if header:
+        strOut.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!DOCTYPE gdml>')
+    gdml.export( strOut, 0, name_='gdml' )
+    return strOut.getvalue()

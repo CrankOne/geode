@@ -5,7 +5,6 @@ An extension module for Flask application.
 import logging
 import yaml
 import copy
-import io
 
 from flask import Blueprint \
                 , request \
@@ -18,7 +17,7 @@ from flask import Blueprint \
 from flask.views import MethodView as FlaskMethodView
 from flask_shelve import get_shelve
 
-from geode.export import build_root_GDML
+from geode.export import build_root_GDML, gdml2str
 
 geodeBlueprint = Blueprint( 'geode'
                           , __name__
@@ -33,6 +32,25 @@ def item_js(itemID, item):
     r['_links'] = { 'self' : url_for('geode.geometry_item', itemID=','.join(itemID), contentType='json' ) }
     return r
 
+def item_resolver( itemEntry  # geomlib item entry (file, warnings, data)
+                 , itemKey  # an item's key within a library
+                 , itemName  # item key, as provided in client's config
+                 , itemConfig  # item config, as provided in client's config
+                 ):
+    """
+    Returns a URI for GDML module based on current routing rules (a "name"
+    attribute of `<file/>' tag).
+    TODO: take into account user's override? (via querystring?)
+    """
+    #print('xx1', itemGDML)
+    #print('xx2', itemKey)
+    #print('xx3', itemConfig)
+    print('xxx ', itemKey)
+    return url_for( 'geode.geometry_item', itemID=','.join(itemKey), contentType='gdml', _external=True )
+    #return itemGDML['file']
+
+#
+# Views
 
 def geomlib_item_view( itemID, contentType='json', item=None, lib=None ):
     """
@@ -60,7 +78,9 @@ def geomlib_item_view( itemID, contentType='json', item=None, lib=None ):
         item = lib.items[itemID]
     if contentType is None or 'json' == contentType:
         return make_response( jsonify(item_js(item)), 200 )
-    return item
+    r = Response(gdml2str(item['data']), status=200, mimetype='application/xml')
+    r.headers["Content-Type"] = "text/xml; charset=utf-8"
+    return r
 
 
 class GeometryAPI(FlaskMethodView):
@@ -83,6 +103,8 @@ class GeometryAPI(FlaskMethodView):
             - improve error reporting
         """
         L = logging.getLogger(__name__)
+        if not request.data:
+            abort(400, "Request didn't bring any data.")
         # assert request.data
         try:
             detectors = yaml.safe_load(request.data)
@@ -99,13 +121,11 @@ class GeometryAPI(FlaskMethodView):
                               , current_app.extensions['geode_gdml'].lib
                               , worldVol={ 'x': 1, 'y':1, 'z':2, 'lunit':'m' }
                               # ^^^ TODO: world size?
+                              , file_resolver=item_resolver
                               )
         if contentType == 'gdml':
-            strOut = io.StringIO()
-            strOut.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!DOCTYPE gdml>')
-            gdmlRoot.export( strOut, 0, name_='gdml' )
             # TODO: error on non-existing entities
-            r = Response(strOut.getvalue(), status=200, mimetype='application/xml')
+            r = Response(gdml2str(gdmlRoot), status=200, mimetype='application/xml')
             r.headers["Content-Type"] = "text/xml; charset=utf-8"
             return r
 
@@ -182,6 +202,8 @@ class GeometryAPI(FlaskMethodView):
         """
         pass
 
+#
+# Setting up views
 
 setupView = GeometryAPI.as_view('geometry_api')
 # Setups/assemblies overview

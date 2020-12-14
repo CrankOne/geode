@@ -107,6 +107,9 @@ def build_root_GDML( assemblyItems
                           , world=GDML.ReferenceType(ref='World')
                           )
     gdmlRoot.add_setup(setup)
+    # TODO: consider injecting following attributes into root <gdml/>:
+    #   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    #   xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd"
     return gdmlRoot
 
 def export( gdml, index, exportFormat='GDML' ):

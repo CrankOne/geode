@@ -1,19 +1,26 @@
-import copy
+from flask_shelve import get_shelve
 
-class Model(object):
-    """
-    Defines a data model interface for geometry setups.
-    """
-    def __init__(self, common, setups):
-        self.common = copy.deepcopy(common)
-        self.setups = setups
+class GeometriesStorageInterface(object):
+    """Interfaces setup's persistent storage"""
+    def __init__(self):
+        pass
 
-    def __setitem__(self, ID, payload):
-        raise NotImplementedError('Adding geometries is not yet implemented.')
+    def create(self, data):
+        """Creates new setup in storage, returns its ID"""
+        raise NotImplementedError('Creation of new setup.')
 
-    def asdict(self, ID, client):
-        """
-        Returns common+setup configuration
-        """
-        return { **self.common, **self.setups[ID], **client )
+    def get(self, setupID):
+        """Returns setup data by its ID."""
+        raise NotImplementedError('Retrieving a setup.')
 
+    def setup_exists(self, setupID):
+        """Returns, whether the setup with this ID exists."""
+        raise NotImplementedError('Lookup for a setup.')
+
+    def wipe(self, setupID):
+        """Removes setup with ID returning whether or not it existed."""
+        raise NotImplementedError('Remove a setup.')
+
+    def list(self):
+        """Returns list of available setups"""
+        raise NotImplementedError('List setups.')

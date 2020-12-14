@@ -6,6 +6,7 @@ be parsed with geometry entities applied and output GDML or ROOT::TGeo will
 be written w.r.t. output arguments.
 """
 
+import os
 import logging
 import logging.config
 
@@ -49,14 +50,21 @@ def main(args):
             oFormat = 'TGeo'
         else:
             raise RuntimeError('No output file format specified.')
+    # Resolve files relatively to the output file
+    file_resolver = None
+    if args.output is not sys.stdout:  # TODO or any other stream
+        oDir = args.base_dir if args.base_dir else os.path.dirname(args.output.name)
+        file_resolver = lambda item, geoPath, entryName, cfgParameters: os.path.relpath( item['file'], oDir )
+    # Make the new GDML document
     gdmlRoot = build_root_GDML( detectors['assemblies'].items()
                               , lib
                               , worldVol={ 'x': 1, 'y':1, 'z':2, 'lunit':'m' }  # TODO: world size?
+                              , file_resolver=file_resolver
                               )
     if 'gdml' == oFormat:
         # The GDML output format can be accomplished directly from LXML ETREE,
         # only the common XML header must be typed beforehead
-        args.output.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!DOCTYPE gdml>')
+        args.output.write('<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE gdml>\n')
         gdmlRoot.export( args.output, 0, name_='gdml' )
     else:
         # Instantiate definitions index
@@ -85,6 +93,10 @@ if "__main__" == __name__:
             ' tests in some sophisticated cases with complex alias/anchor YAML'
             ' syntax.'
             , action='store_true' )
+    p.add_argument( '-b', '--base-dir', help="Directory considered as a current"
+            " for \"name\" attricbute for GDML <file/> tag (used with GDML"
+            " output). If not specified, paths will be relative to the output"
+            " file location.")
     p.add_argument( '-l', '--list-lib-items', help='When given, the list of'
             ' items discovered in library will be printed to stdout.'
             , action='store_true' )
